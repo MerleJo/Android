@@ -6,14 +6,8 @@ import android.widget.TextView;
 
 public class PizzaOrder extends Activity {
 
-<<<<<<< HEAD
-    TextView test;
-    TextView test2;
 
-    TextView testjetzt;
-=======
-    String      fattyMcFatfett;
->>>>>>> fed0515e90d7eb4033c0fe37c5ba69fd94935c63
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
