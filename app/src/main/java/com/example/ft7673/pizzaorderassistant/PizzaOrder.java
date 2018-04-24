@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class PizzaOrder extends Activity {
 
+    String      fattyMcFatfett;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
