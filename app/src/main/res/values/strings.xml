@@ -24,6 +24,7 @@
     <string name="hintSauce">Sauce</string>
 
     <string name="btnOK">OK</string>
+    <string name="btnExit">Exit</string>
     <string name="btnCheckout">Check Out</string>
     <string name="btnAdd">Add another Pizza</string>
 </resources>
