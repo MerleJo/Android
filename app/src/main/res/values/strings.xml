@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Pizza Order Assistant</string>
+
+    <string name="txtTakeOrder">Take a new order to:</string>
+    <string name="txtPizza">Pick Pizza</string>
+    <string name="txtDough">Pick Dough</string>
+    <string name="txtSize">Pick Size</string>
+    <string name="txtTopping">Additional Toppings</string>
+    <string name="txtSauce">Pick Sauce</string>
+
+    <string name="txtOrder">Order details</string>
+    <string name="txtTotal">Total</string>
+
+    <string name="rdbtPizzeria">Pizzeria</string>
+    <string name="rdbtTakeaway">Takeaway</string>
+    <string name="rdbtDelivery">Delivery</string>
+
+    <string name="hintAddress">Delivery Address</string>
+    <string name="hintPhone">Phone Numeber</string>
+    <string name="hintPizza">Pizza</string>
+    <string name="hintDough">Pizza Dough</string>
+    <string name="hintSize">Pizza Size</string>
+    <string name="hintTopping">Additional Toppings</string>
+    <string name="hintSauce">Sauce</string>
+
+    <string name="btnOK">OK</string>
+    <string name="btnCheckout">Check Out</string>
+    <string name="btnAdd">Add another Pizza</string>
 </resources>
