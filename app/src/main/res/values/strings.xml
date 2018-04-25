@@ -25,6 +25,17 @@
 
     <string name="btnOK">OK</string>
     <string name="btnExit">Exit</string>
+    <string name="btnCancel">Cancel</string>
     <string name="btnCheckout">Check Out</string>
     <string name="btnAdd">Add another Pizza</string>
+
+    <string name="toastSelectType">Please select an order type first.</string>
+
+    <string name="alertSizeTitle">Select Size</string>
+
+    <string-array name="arraySizes">
+        <item name="sizeSmall">Small (for kids)</item>
+        <item name="sizeMedium">Medium</item>
+         <item name="sizeBig">Big</item>
+    </string-array>
 </resources>
