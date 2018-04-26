@@ -1,22 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="@dimen/big"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/big">
 
-    <TextView
-        android:id="@+id/txtPickTime"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/txtPickTime" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/etPickedTime"
+        <TextView
+            android:id="@+id/txtPickTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/txtPickTime" />
+
+        <EditText
+            android:id="@+id/etPickedTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="time" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:ems="10"
-        android:inputType="time" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtPacking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/txtPacking" />
+
+        <EditText
+            android:id="@+id/etPacking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnPickupOK"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:text="@string/btnOK" />
+
 </LinearLayout>

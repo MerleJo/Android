@@ -8,6 +8,7 @@
     <string name="txtTopping">Additional Toppings</string>
     <string name="txtSauce">Pick Sauce</string>
     <string name="txtPickTime">Pick up Time:</string>
+    <string name="txtPacking">Packing Option:</string>
 
     <string name="txtOrder">Order details</string>
     <string name="txtTotal">Total</string>

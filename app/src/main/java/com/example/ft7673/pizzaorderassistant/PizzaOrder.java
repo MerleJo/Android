@@ -32,9 +32,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     RadioButton                     rdbtTakeaway;
     RadioButton                     rdbtDelivery;
     Button                          btnOrderOK;
+    Button                          btnPickupOK;
 
     Button                          btnCheckout;
     Button                          btnAdd;
+    Button                          btnDeliveryOK;
 
     private Spinner                 spPizza;
     private Spinner                 spDough;
@@ -52,6 +54,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private InputStream             inputStream;
     private String[]                output;
     private String                  lineReader;
+    private String                  delivaddress;
+    private String                  delivphone;
     private BufferedReader          reader;
 
     private String[]                pizzaList;
@@ -59,6 +63,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Calendar                calendar;
 
     private EditText                etPickedTime;
+    private EditText                etPacking;
+    private EditText                etAddress;
+    private EditText                etPhone;
 
 
     @Override
@@ -168,10 +175,20 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     case 2:
                         setContentView(R.layout.pickup_info);
                         etPickedTime = findViewById(R.id.etPickedTime);
-                        //Alert Dialog mit Time Picker & Packing Option
+                        etPacking = findViewById(R.id.etPacking);
+                        btnPickupOK = findViewById(R.id.btnPickupOK);
+                        btnPickupOK.setOnClickListener(this);// noch Funktion hinterlegen
+
+                        // Packing Options  Auswahl noch hinzufügen
                         break;
                     case 3:
                         setContentView(R.layout.delivery_info);
+                        etAddress = findViewById(R.id.etAddress);
+                        etPhone = findViewById(R.id.eTPhone);
+                        btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
+                        btnDeliveryOK.setOnClickListener(this); // noch Funktion hinterlegen
+                        getDeliveryInfo();
+
                         break;
                     default:
 
@@ -182,7 +199,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
         }
     }
-
+private void getDeliveryInfo(){
+        delivaddress = etAddress.getText().toString();
+        delivphone = etPhone.getText().toString();
+}
     public void readFile(){
 
         int counter = 0;

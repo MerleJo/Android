@@ -26,7 +26,7 @@ public class SentOrder extends Activity implements View.OnClickListener {
         btnSendOK = findViewById(R.id.btnSendOK);
         btnSendOK.setOnClickListener(this);
 
-        receiveOrder();
+        //receiveOrder();
     }
 
     @Override
@@ -44,13 +44,13 @@ public class SentOrder extends Activity implements View.OnClickListener {
         }
     }
 
-    private void receiveOrder(){
+   /* private void receiveOrder(){
         Intent intent = getIntent();
         MyOrder order = new MyOrder(intent.getDoubleExtra(), intent.getStringArrayExtra());         // funktioniert nicht, solang ich nicht weiß, was wir mitgeben
 
         etTotal.setText(Double.toString(order.getTotal()));
         etOrder.setText(Arrays.toString(order.getOrder()).replaceAll("\\[|\\]", ""));
-
+*/
 
 
     }
