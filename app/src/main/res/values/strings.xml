@@ -32,6 +32,7 @@
     <string name="toastSelectType">Please select an order type first.</string>
 
     <string name="alertSizeTitle">Select Size</string>
+    <string name="alertTakeAwayTitle">Please select time and adress</string>
 
     <string-array name="arraySizes">
         <item name="sizeSmall">Small (for kids)</item>

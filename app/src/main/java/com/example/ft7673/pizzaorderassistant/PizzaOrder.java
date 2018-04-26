@@ -4,42 +4,72 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, DialogInterface.OnClickListener {
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener {
 
 
-    RadioGroup  rdGroup;
-    RadioButton rdbtPizzeria;
-    RadioButton rdbtTakeaway;
-    RadioButton rdbtDelivery;
-    Button      btnOrderOK;
+    RadioGroup                      rdGroup;
+    RadioButton                     rdbtPizzeria;
+    RadioButton                     rdbtTakeaway;
+    RadioButton                     rdbtDelivery;
+    Button                          btnOrderOK;
 
-    private int orderType = 0;          // 1= Pizzeria, 2=Takeaway, 3=Delivery
+    Button                          btnCheckout;
+    Button                          btnAdd;
 
-    AlertDialog alertSize;
+    private Spinner                 spPizza;
+    private Spinner                 spDough;
+    private Spinner                 spSize;
+    private Spinner                 spTopp;
+    private Spinner                 spSauce;
+
+    private ArrayAdapter<String>    adprPizza;
+
+    private int                     orderType = 0;                                                      // 1= Pizzeria, 2=Takeaway, 3=Delivery
+    private int                     cntPiz;
+    AlertDialog                     alertSize;
+    AlertDialog                     alertTake;
+
+    private InputStream             inputStream;
+    private String[]                output;
+    private String                  lineReader;
+    private BufferedReader          reader;
+
+    private String[]                pizzaList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_type);
 
+
+        rdGroup      = findViewById(R.id.rdGroup);
         rdbtPizzeria = findViewById(R.id.rdbtPizzeria);
         rdbtTakeaway = findViewById(R.id.rdbtTakeaway);
         rdbtDelivery = findViewById(R.id.rdbtDelivery);
-        rdGroup = findViewById(R.id.rdGroup);
+
         btnOrderOK   = findViewById(R.id.btnOrderTypeOK);
+        btnOrderOK.setOnClickListener(this);
 
         rdGroup.setOnCheckedChangeListener(this);
+
+        pizzaList   = new String[15];
 
     }
     @Override
@@ -72,22 +102,56 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             case R.id.rdbtDelivery:
                 orderType = 3;
                 break;
+
+            default:
+                // Benötigt?
         }
     }
 
+    public void defineOrder(){
+        setContentView(R.layout.activity_main);
+
+        spPizza     = findViewById(R.id.spPizza);
+        spDough     = findViewById(R.id.spDough);
+        spSize      = findViewById(R.id.spSize);
+        spTopp      = findViewById(R.id.spTopp);
+        spSauce     = findViewById(R.id.spSauce);
+        //spPizza.setPromptId(R.string.hintPizza); need a hint
+
+        btnAdd      = findViewById(R.id.btnAdd);
+        btnCheckout = findViewById(R.id.btnCheckout);
+
+        btnAdd.setOnClickListener(this);
+        btnCheckout.setOnClickListener(this);
+
+        readFile();
+        adprPizza = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, pizzaList);
+        adprPizza.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spPizza.setAdapter(adprPizza);
+        spPizza.setOnItemSelectedListener(this);
+
+    }
+
+    @Override
     public void onClick(View v){            // funktioniert nicht
         switch(v.getId()){
             case R.id.btnOrderTypeOK:
                 if(rdGroup.getCheckedRadioButtonId() != -1){
-                    setContentView(R.layout.activity_main);
+                    defineOrder();
+
+
                 }else{
                     Toast.makeText(this,R.string.toastSelectType, Toast.LENGTH_LONG).show();
                 }
 
                 break;
-            case R.id.btnDeliveryOK:
-                // Intent für neue activity_send schreiben
+            case R.id.btnAdd:
+
+
                 break;
+
             case R.id.btnCheckout:
                 switch (orderType){
                     case 1:
@@ -103,7 +167,53 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 }
                 break;
+            case R.id.btnDeliveryOK:
+                // Intent für neue activity_send schreiben
+                break;
         }
+    }
+
+    public void readFile(){
+
+        int counter = 0;
+        int fileNr  = 0;
+        switch (bla){
+            case 1:
+                inputStream = getResources().openRawResource(R.raw.pizza);
+                break;
+            case 2:
+                inputStream = getResources().openRawResource(R.raw.toppings);
+                break;
+            case 3:
+                inputStream = getResources().openRawResource(R.raw.sauce);
+                break;
+
+            default:
+                return;
+        }
+        inputStream = getResources().openRawResource(R.raw.pizza);
+        reader      = new BufferedReader(new InputStreamReader(inputStream));
+
+        try {
+
+            while((lineReader = reader.readLine()) != null) {
+
+                output = lineReader.split(";");
+
+
+                pizzaList[counter] = output[0];
+
+                counter++;
+                }
+
+
+        }
+
+        catch (Exception e ){
+            Log.e("Reading failed",e.toString());
+
+        }
+        readFile();
     }
 
     private AlertDialog selectSize(){
@@ -111,16 +221,54 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         diabuilder.setTitle(R.string.alertSizeTitle)
                // .setIcon()        noch einfügen
 
-        .setSingleChoiceItems(R.array.arraySizes, -1, new DialogInterface.OnClickListener() {
+        .setSingleChoiceItems(R.array.arraySizes, -1, this );
 
-        });
 
         alertSize = diabuilder.create();
+        alertSize.show();
 
         return alertSize;
     }
+
+    private AlertDialog takeAway(){
+        AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
+        diabuilder.setTitle(R.string.alertTakeAwayTitle);
+                // .setIcon()        noch einfügen
+
+                //Spinner schreiben
+
+
+        alertTake = diabuilder.create();
+        alertTake.show();
+
+        return alertSize;
+    }
+
+
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        if(dialog == alertSize){
+
+
+        switch(which){
+
+        }
+        }
+        else if (dialog == alertTake){
+            switch (which){
+
+            }
+            }
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 }

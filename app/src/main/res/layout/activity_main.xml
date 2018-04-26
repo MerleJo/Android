@@ -22,14 +22,11 @@
             android:layout_weight="1"
             android:text="@string/txtPizza" />
 
-        <EditText
-            android:id="@+id/etPizza"
+        <Spinner
+            android:id="@+id/spPizza"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hintPizza"
-            android:inputType="textPersonName" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -46,14 +43,11 @@
             android:layout_weight="1"
             android:text="@string/txtDough" />
 
-        <EditText
-            android:id="@+id/etDough"
+        <Spinner
+            android:id="@+id/spDough"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hintDough"
-            android:inputType="textPersonName" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,14 +63,11 @@
             android:layout_weight="1"
             android:text="@string/txtSize" />
 
-        <EditText
-            android:id="@+id/etSize"
+        <Spinner
+            android:id="@+id/spSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hintSize"
-            android:inputType="textPersonName" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -92,14 +83,11 @@
             android:layout_weight="1"
             android:text="@string/txtTopping" />
 
-        <EditText
-            android:id="@+id/etTopping"
+        <Spinner
+            android:id="@+id/spTopp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hintTopping"
-            android:inputType="textPersonName" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -115,14 +103,11 @@
             android:layout_weight="1"
             android:text="@string/txtSauce" />
 
-        <EditText
-            android:id="@+id/etSauce"
+        <Spinner
+            android:id="@+id/spSauce"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/hintSauce"
-            android:inputType="textPersonName" />
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
