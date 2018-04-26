@@ -34,6 +34,8 @@
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTakeAwayTitle">Please select time and adress</string>
 
+    <string name="mesConfirmation">Order was successfully received.</string>
+
     <string-array name="arraySizes">
         <item name="sizeSmall">Small (for kids)</item>
         <item name="sizeMedium">Medium</item>
