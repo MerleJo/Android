@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -51,12 +52,13 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private InputStream             inputStream;
     private String[]                output;
     private String                  lineReader;
-    private String                  pickupTime;
     private BufferedReader          reader;
 
     private String[]                pizzaList;
 
     private Calendar                calendar;
+
+    private EditText                etPickedTime;
 
 
     @Override
@@ -164,6 +166,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         //Intent für neue activitiy_send schreiben
                         break;
                     case 2:
+                        setContentView(R.layout.pickup_info);
+                        etPickedTime = findViewById(R.id.etPickedTime);
                         //Alert Dialog mit Time Picker & Packing Option
                         break;
                     case 3:
@@ -234,7 +238,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {
-        pickupTime = (String.format("%02d:%02d", hourofDay, minute));
+        etPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
     }
     private AlertDialog selectSize(){
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
