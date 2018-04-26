@@ -2,6 +2,7 @@ package com.example.ft7673.pizzaorderassistant;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,13 +15,15 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Calendar;
 
-public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener {
 
 
     RadioGroup                      rdGroup;
@@ -48,9 +51,12 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private InputStream             inputStream;
     private String[]                output;
     private String                  lineReader;
+    private String                  pickupTime;
     private BufferedReader          reader;
 
     private String[]                pizzaList;
+
+    private Calendar                calendar;
 
 
     @Override
@@ -216,6 +222,20 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         readFile();
     }
 
+    private void setPickupTime(){
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        TimePickerDialog picker;
+
+        picker = new TimePickerDialog(this, this, hour, minute, true);
+        picker.setTitle(R.string.alertPickupTimeTitle);
+                //.setIcon noch einfügen
+        picker.show();
+    }
+    @Override
+    public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {
+        pickupTime = (String.format("%02d:%02d", hourofDay, minute));
+    }
     private AlertDialog selectSize(){
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder.setTitle(R.string.alertSizeTitle)
