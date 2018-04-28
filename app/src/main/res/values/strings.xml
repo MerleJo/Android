@@ -24,6 +24,7 @@
     <string name="hintSize">Pizza Size</string>
     <string name="hintTopping">Additional Toppings</string>
     <string name="hintSauce">Sauce</string>
+    <string name="hintNotSelected">Not selected yet</string>
 
     <string name="cbTable">Sauce for the table</string>
 
@@ -43,13 +44,20 @@
 
     <string name="mesConfirmation">Order was successfully received.</string>
 
+    <string name="stringNotSelected">not selected</string>
+    <string name="toastNoName">Please select a pizza first.</string>
+    <string name="toastNoDough">Please select a dough first.</string>
+    <string name="toastNoSize">Please select a size first.</string>
+
     <string-array name="arraySizes">
+        <item name ="not">not selected</item>
         <item name="sizeSmall">Small (for kids)</item>
         <item name="sizeMedium">Medium</item>
          <item name="sizeBig">Big</item>
     </string-array>
 
     <string-array name="arrayDough">
+        <item name="not">not selected</item>
         <item name="dough1">Neopolitan</item>
         <item name="dough2">Chicago</item>
         <item name="dough3">New York</item>
