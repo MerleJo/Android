@@ -5,6 +5,30 @@
     android:orientation="vertical"
     android:padding="@dimen/big">
 
+    <EditText
+        android:id="@+id/etOrderType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/etFirst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName|textPostalAddress" />
+
+    <EditText
+        android:id="@+id/etSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="phone|time" />
+
     <TextView
         android:id="@+id/txtOrder"
         android:layout_width="match_parent"

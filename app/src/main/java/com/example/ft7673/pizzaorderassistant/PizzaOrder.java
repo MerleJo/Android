@@ -83,6 +83,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private String[][]              order;
     private Pizza[]                 porder;
+    Intent                          intent;
 
 
     @Override
@@ -205,22 +206,22 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 break;
             case R.id.btnAdd:
-
-
-
+                defineOrder();
                 break;
 
             case R.id.btnCheckout:
                 switch (orderType){
                     case 1:                                                                          // in Pizzeria
-                        Intent intent = new Intent(this, SentOrder.class );
+                        intent = new Intent(this, SentOrder.class );
                         intent.putExtra("order", porder);
+                        intent.putExtra("ordertype", orderType);
+                        //intent.putExtra("tableNR", tableNR);                                      // noch als Extra implementierbar
                         if(intent.resolveActivity(getPackageManager()) != null) {
                             startActivity(intent);
                         }
                         break;
                     case 2:
-                        setContentView(R.layout.pickup_info);
+                        setContentView(R.layout.takeaway_info);
                         etPickedTime = findViewById(R.id.etPickedTime);
                         etPacking = findViewById(R.id.etPacking);
                         btnPickupOK = findViewById(R.id.btnPickupOK);
@@ -241,8 +242,25 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 }
                 break;
+            case R.id.btnPickupOK:
+                intent = new Intent(this, SentOrder.class );
+                intent.putExtra("order", porder);
+                intent.putExtra("ordertype", orderType);
+                intent.putExtra("packing", etPacking.getText().toString());
+                intent.putExtra("time", etPickedTime.getText().toString());
+                if(intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+                break;
             case R.id.btnDeliveryOK:
-                // Intent für neue activity_send schreiben
+                intent = new Intent(this, SentOrder.class );
+                intent.putExtra("order", porder);
+                intent.putExtra("ordertype", orderType);
+                intent.putExtra("address", etAddress.getText().toString());
+                intent.putExtra("phone", etPhone.getText().toString());
+                if(intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
                 break;
         }
     }
@@ -343,7 +361,7 @@ private void getDeliveryInfo(){
                     while ((lineReader = reader.readLine()) != null) {
                         counter++;
                     }
-                    
+
                     sauceList = new String[counter];
                     break;
                 case 2:

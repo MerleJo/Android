@@ -15,6 +15,9 @@ public class SentOrder extends Activity implements View.OnClickListener {
     Button btnSendOK;
     EditText etTotal;
     EditText etOrder;
+    EditText etOrderType;
+    EditText firstInfo;
+    EditText secondInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,9 @@ public class SentOrder extends Activity implements View.OnClickListener {
 
         etTotal = findViewById(R.id.etTotal);
         etOrder = findViewById(R.id.etOrder);
+        etOrderType = findViewById(R.id.etOrderType);
+        firstInfo = findViewById(R.id.etFirst);
+        secondInfo = findViewById(R.id.etSecond);
 
         btnSendOK = findViewById(R.id.btnSendOK);
         btnSendOK.setOnClickListener(this);
@@ -47,7 +53,21 @@ public class SentOrder extends Activity implements View.OnClickListener {
     private void receiveOrder() {
         Intent intent = getIntent();
         MyOrder order = new MyOrder((Pizza[]) intent.getExtras().get("order"));                     // brauchen wir Seriablizable wirklich?
-
+        switch (intent.getExtras().getInt("ordertype")){
+            case 1:
+               etOrderType.setText(R.string.rdbtPizzeria);
+                break;
+            case 2:
+                etOrderType.setText(R.string.rdbtTakeaway);
+                firstInfo.setText(intent.getExtras().getString("packing"));
+                secondInfo.setText(intent.getExtras().getString("time"));
+                break;
+            case 3:
+                etOrderType.setText(R.string.rdbtDelivery);
+                firstInfo.setText(intent.getExtras().getString("address"));
+                secondInfo.setText(intent.getExtras().getString("phone"));
+                break;
+        }
         etTotal.setText(Double.toString(order.getTotal()));
         etOrder.setText(Arrays.toString(order.getOrder()).replaceAll("\\[|\\]", ""));
 
