@@ -195,7 +195,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     @Override
-    public void onClick(View v){            // funktioniert nicht
+    public void onClick(View v){
         switch(v.getId()){
             case R.id.btnOrderTypeOK:
                 if(rdGroup.getCheckedRadioButtonId() != -1){
@@ -465,8 +465,8 @@ private void getDeliveryInfo(){
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        Pizza help = new Pizza(pizzaList[i]);
-        porder[cntPiz] = help;
+    //    Pizza help = new Pizza(pizzaList[i]);
+    //    porder[cntPiz] = help;
       ////  order[0][cntPiz] = pizzaList[i];                //speichert die Pizza beim anklicken im Spinner in das speicherarray
     }
 
