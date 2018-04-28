@@ -14,6 +14,9 @@ public class Pizza {
     public Pizza(String name){
         this.name = name;
         this.cntTopping = 0;
+        this.dough      = "not selected";
+        this.sauce      = "none";
+        this.size       = "not selected";
     }
     /*public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){        // checken ob wir es brauchen
         this.name = name;

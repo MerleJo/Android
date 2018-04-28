@@ -91,7 +91,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private boolean[] selected;
 
-    private String[][] order;
     private Pizza[] porder = new Pizza[12];
     Intent intent;
 
@@ -113,7 +112,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         rdGroup.setOnCheckedChangeListener(this);
         csvFile = 0;
 
-        order = new String[20][50];
 
 
     }
@@ -166,6 +164,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         topSw = findViewById(R.id.topSw);
         //spPizza.setPromptId(R.string.hintPizza); //need a hint
 
+
+
         btnAdd = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
         cbTable = findViewById(R.id.cbTable);
@@ -192,11 +192,13 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         spPizza.setAdapter(adprPizza);
         spPizza.setOnItemSelectedListener(this);
 
+
         adprSauce = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, sauceList);
         adprSauce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spSauce.setAdapter(adprSauce);
+        spSauce.setOnItemSelectedListener(this);
 
 
         pzSizeList = getResources().getStringArray(R.array.arraySizes);
@@ -205,6 +207,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         adprSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spSize.setAdapter(adprSize);
+        spSize.setOnItemSelectedListener(this);
 
         doughList = getResources().getStringArray(R.array.arrayDough);
 
@@ -213,6 +216,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         adprDough.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spDough.setAdapter(adprDough);
+        spDough.setOnItemSelectedListener(this);
 
         topSw.setOnCheckedChangeListener(this);
 
@@ -305,10 +309,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
             return false;
-        }else if(porder[cntPiz].getPizzaDough().equals(R.string.stringNotSelected)){
+        }else if(porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
             Toast.makeText(this, R.string.toastNoDough, Toast.LENGTH_LONG).show();
             return false;
-        }else if(porder[cntPiz].getPizzaSize().equals(R.string.stringNotSelected)){
+        }else if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))){
             Toast.makeText(this, R.string.toastNoSize, Toast.LENGTH_LONG).show();
             return false;
         }
@@ -330,7 +334,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
                         pizzaList[counter]  = output[0];
-                        pizzaPrice[counter] = Double.parseDouble(output[1]);
+                        pizzaPrice[counter] = Double.valueOf(output[1]);
                         // porder[cntPiz].setPizzaName(output[0]);
                         // porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
@@ -508,14 +512,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         if (adapterView == spPizza) {
-            if(spPizza.getSelectedItem().toString().equals("not selected")){
+            Pizza help = new Pizza(pizzaList[i]);
+            porder[cntPiz] = help;
+
+            if(spPizza.getSelectedItem().toString().equals(getResources().getString(R.string.stringNotSelected))){
                 orderView.setVisibility(View.INVISIBLE);
 
             }
             else {
                 orderView.setVisibility(View.VISIBLE);
-                Pizza help = new Pizza(pizzaList[i]);
-                porder[cntPiz] = help;
+
             }
            //porder[cntPiz].setPizzaPrice(Double.parseDouble(pizzaList[i+1]));
         }
@@ -538,7 +544,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     //  else if(adapterView == spDough){
 
     // }
-    ////  order[0][cntPiz] = pizzaList[i];                //speichert die Pizza beim anklicken im Spinner in das speicherarray
 
 
     @Override
