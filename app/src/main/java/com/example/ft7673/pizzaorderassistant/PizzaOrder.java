@@ -300,8 +300,8 @@ private void getDeliveryInfo(){
 
 
                         pizzaList[counter] = output[0];
-                        //porder[counter].setPizzaName(output[0]);
-                        //porder[counter].setPizzaPrice(Double.parseDouble(output[1]));                   // ins CSV File noch den Preis reinschreiben
+                        porder[cntPiz].setPizzaName(output[0]);
+                        porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
                         counter++;
 
@@ -320,8 +320,8 @@ private void getDeliveryInfo(){
                         sauceList[counter] = output[0];
                         counter++;
 
-                        //porder[counter].setPizzaSauce(output[0]);
-                        //porder[counter].setPizzaPrice(Double.parseDouble(output[1]));
+                        porder[cntPiz].setPizzaSauce(output[0]);
+                        porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
                     }
                     csvFile++;
@@ -337,10 +337,6 @@ private void getDeliveryInfo(){
 
                         toppingList[counter] = output[0];
                         counter++;
-
-                        //porder[counter].setPizzaToppings(output[0]);                               String Array oder String?
-                       // porder[counter].setPizzaPrice();                                              wie Preis berechnen
-
                     }
                     csvFile++;
                 default:
@@ -455,7 +451,6 @@ private void getDeliveryInfo(){
         diabuilder.setNegativeButton(R.string.btnCancel, this);
         diabuilder.setMultiChoiceItems(toppingList, selected, this);
 
-
         alertTake = diabuilder.create();
         alertTake.show();
 
@@ -499,6 +494,7 @@ private void getDeliveryInfo(){
             boolTop[i] = true;
         }
         boolTop[i] = false;
+        
     }
 
     @Override

@@ -6,14 +6,14 @@ public class Pizza {
     private String name;
     private String dough;
     private String size;
-    private String[] toppings;
+    private String toppings;
     private String sauce;
     private double price;
 
     public Pizza(String name){
         this.name = name;
     }
-    public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){        // checken ob wir es brauchen
+    public Pizza(String name, String dough, String size, String toppings, String sauce, double price){        // checken ob wir es brauchen
         this.name = name;
         this.dough = dough;
         this.size = size;
@@ -40,10 +40,10 @@ public class Pizza {
     public void setPizzaSize(String size){
         this.size = size;
     }
-    public String[] getPizzaToppings(){
+    public String getPizzaToppings(){
         return this.toppings;
     }
-    public void setPizzaToppings(String[] toppings){
+    public void setPizzaToppings(String toppings){
         this.toppings = toppings;
     }
     public String getPizzaSauce(){
