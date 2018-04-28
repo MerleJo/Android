@@ -330,7 +330,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
                         pizzaList[counter]  = output[0];
-                        pizzaPrice[counter] = Double.valueOf(output[1]);
+                        pizzaPrice[counter] = Double.parseDouble(output[1]);
                         // porder[cntPiz].setPizzaName(output[0]);
                         // porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
@@ -367,7 +367,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
                         toppingList[counter]    = output[0];
-                        toppingPrice[counter]   = Double.valueOf(output[1]);
+                        toppingPrice[counter]   = Double.parseDouble(output[1]);
                         counter++;
                     }
                     csvFile++;
