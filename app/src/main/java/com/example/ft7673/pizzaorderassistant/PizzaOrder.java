@@ -33,13 +33,14 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
         DialogInterface.OnMultiChoiceClickListener, CompoundButton.OnCheckedChangeListener {
 
+    private View                orderView;
 
-    RadioGroup rdGroup;
-    RadioButton rdbtPizzeria;
-    RadioButton rdbtTakeaway;
-    RadioButton rdbtDelivery;
-    Button btnOrderOK;
-    Button btnPickupOK;
+    RadioGroup                  rdGroup;
+    RadioButton                 rdbtPizzeria;
+    RadioButton                 rdbtTakeaway;
+    RadioButton                 rdbtDelivery;
+    Button                      btnOrderOK;
+    Button                      btnPickupOK;
 
     Button btnCheckout;
     Button btnAdd;
@@ -152,6 +153,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     public void defineOrder() {
         setContentView(R.layout.activity_main);
+
+        orderView = findViewById(R.id.orderView);
 
         spPizza = findViewById(R.id.spPizza);
         spDough = findViewById(R.id.spDough);
@@ -498,8 +501,15 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         if (adapterView == spPizza) {
-            Pizza help = new Pizza(pizzaList[i]);
-            porder[cntPiz] = help;
+            if(spPizza.getSelectedItem().toString().equals("not selected")){
+                orderView.setVisibility(View.INVISIBLE);
+
+            }
+            else {
+                orderView.setVisibility(View.VISIBLE);
+                Pizza help = new Pizza(pizzaList[i]);
+                porder[cntPiz] = help;
+            }
            //porder[cntPiz].setPizzaPrice(Double.parseDouble(pizzaList[i+1]));
         }
         if(adapterView == spDough){
