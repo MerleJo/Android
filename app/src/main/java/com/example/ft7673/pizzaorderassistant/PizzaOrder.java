@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -41,6 +42,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     Button                          btnCheckout;
     Button                          btnAdd;
     Button                          btnDeliveryOK;
+    CheckBox                        cbTable;
 
     private Spinner                 spPizza;
     private Spinner                 spDough;
@@ -151,9 +153,17 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
         btnAdd      = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
+        cbTable     = findViewById(R.id.cbTable);
 
         btnAdd.setOnClickListener(this);
         btnCheckout.setOnClickListener(this);
+        if(orderType == 1){
+            cbTable.setVisibility(View.VISIBLE);
+            cbTable.setOnClickListener(this);
+        }else{
+            cbTable.setVisibility(View.INVISIBLE);
+        }
+
 
         for(int i = 0 ; i<3 ; i++) {
             getCsvSize();
@@ -189,8 +199,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             case R.id.btnOrderTypeOK:
                 if(rdGroup.getCheckedRadioButtonId() != -1){
                     defineOrder();
-
-
                 }else{
                     Toast.makeText(this,R.string.toastSelectType, Toast.LENGTH_LONG).show();
                 }
@@ -205,13 +213,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             case R.id.btnCheckout:
                 switch (orderType){
                     case 1:                                                                          // in Pizzeria
-                        MyOrder toSend = new MyOrder(porder);
                         Intent intent = new Intent(this, SentOrder.class );
                         intent.putExtra("order", porder);
                         if(intent.resolveActivity(getPackageManager()) != null) {
                             startActivity(intent);
                         }
-                        //Intent für neue activitiy_send schreiben
                         break;
                     case 2:
                         setContentView(R.layout.pickup_info);
@@ -337,8 +343,7 @@ private void getDeliveryInfo(){
                     while ((lineReader = reader.readLine()) != null) {
                         counter++;
                     }
-
-
+                    
                     sauceList = new String[counter];
                     break;
                 case 2:

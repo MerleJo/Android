@@ -109,6 +109,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
+        <CheckBox
+            android:id="@+id/cbTable"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/cbTable" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -130,6 +138,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btnAdd" />
+
     </LinearLayout>
 
 </LinearLayout>

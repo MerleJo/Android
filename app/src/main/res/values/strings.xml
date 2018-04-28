@@ -25,6 +25,8 @@
     <string name="hintTopping">Additional Toppings</string>
     <string name="hintSauce">Sauce</string>
 
+    <string name="cbTable">Sauce for the table</string>
+
     <string name="btnOK">OK</string>
     <string name="btnExit">Exit</string>
     <string name="btnCancel">Cancel</string>
