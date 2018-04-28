@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -52,7 +53,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private ArrayAdapter<String>    adprSauce;
 
     private int                     orderType = 0;                                                      // 1= Pizzeria, 2=Takeaway, 3=Delivery
-    private int                     cntPiz;
+    private int                     cntPiz = 0;
     private int                     csvFile;
     AlertDialog                     alertSize;
     AlertDialog                     alertTake;
@@ -79,6 +80,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private boolean[]               selected;
 
     private String[][]              order;
+    private Pizza[]                 porder;
 
 
     @Override
@@ -202,7 +204,13 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
             case R.id.btnCheckout:
                 switch (orderType){
-                    case 1:
+                    case 1:                                                                          // in Pizzeria
+                        MyOrder toSend = new MyOrder(porder);
+                        Intent intent = new Intent(this, SentOrder.class );
+                        intent.putExtra("order", porder);
+                        if(intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        }
                         //Intent für neue activitiy_send schreiben
                         break;
                     case 2:
@@ -250,9 +258,11 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                        pizzaList[counter] = output[0];
+                        //pizzaList[counter] = output[0];
+                        porder[counter].setPizzaName(output[0]);
+                        porder[counter].setPizzaPrice(Double.parseDouble(output[1]));                   // ins CSV File noch den Preis reinschreiben
 
-                        counter++;
+                        //counter++;
 
                     }
                     csvFile++;
@@ -266,9 +276,11 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                        sauceList[counter] = output[0];
+                        //sauceList[counter] = output[0];
+                        //counter++;
 
-                        counter++;
+                        porder[counter].setPizzaSauce(output[0]);
+                        porder[counter].setPizzaPrice(Double.parseDouble(output[1]));
 
                     }
                     csvFile++;
@@ -282,9 +294,11 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                        toppingList[counter] = output[0];
+                       // toppingList[counter] = output[0];
+                       // counter++;
 
-                        counter++;
+                        //porder[counter].setPizzaToppings(output[0]);                               String Array oder String?
+                       // porder[counter].setPizzaPrice();                                              wie Preis berechnen
 
                     }
                     csvFile++;
@@ -428,7 +442,9 @@ private void getDeliveryInfo(){
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        order[0][cntPiz] = pizzaList[i];                //speichert die Pizza beim anklicken im Spinner in das speicherarray
+        Pizza help = new Pizza(pizzaList[i]);
+        porder[cntPiz] = help;
+      ////  order[0][cntPiz] = pizzaList[i];                //speichert die Pizza beim anklicken im Spinner in das speicherarray
     }
 
     @Override

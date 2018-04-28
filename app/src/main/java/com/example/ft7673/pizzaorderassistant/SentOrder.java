@@ -26,7 +26,7 @@ public class SentOrder extends Activity implements View.OnClickListener {
         btnSendOK = findViewById(R.id.btnSendOK);
         btnSendOK.setOnClickListener(this);
 
-        //receiveOrder();
+        receiveOrder();
     }
 
     @Override
@@ -34,8 +34,8 @@ public class SentOrder extends Activity implements View.OnClickListener {
 
         switch (v.getId()){                                                                         // nicht nötig falls kein anderer Button noch gebraucht wird
             case R.id.btnSendOK:
-                //Intent intent = new Intent();                                                     keine Bestätigung gefordert, wollen wir das machen? weil so funktioniert das leider noch nicht
-               // intent.putExtra(R.string.mesConfirmation,);
+                Intent intent = new Intent();                                                    // keine Bestätigung gefordert, wollen wir das machen? weil so funktioniert das leider noch nicht
+               intent.putExtra("confirmation", R.string.mesConfirmation);
                 setContentView(R.layout.order_type);
                 // welche Dinge noch zurücksetzen?
                 break;
@@ -44,14 +44,14 @@ public class SentOrder extends Activity implements View.OnClickListener {
         }
     }
 
-   /* private void receiveOrder(){
+    private void receiveOrder() {
         Intent intent = getIntent();
-        MyOrder order = new MyOrder(intent.getDoubleExtra(), intent.getStringArrayExtra());         // funktioniert nicht, solang ich nicht weiß, was wir mitgeben
+        MyOrder order = new MyOrder((Pizza[]) intent.getExtras().get("order"));
 
         etTotal.setText(Double.toString(order.getTotal()));
         etOrder.setText(Arrays.toString(order.getOrder()).replaceAll("\\[|\\]", ""));
-*/
 
 
     }
+}
 
