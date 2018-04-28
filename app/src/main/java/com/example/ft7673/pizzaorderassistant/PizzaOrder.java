@@ -78,6 +78,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private String[] pzSizeList;
     private String[] doughList;
 
+    private Double[] pizzaPrice;
+    private Double[] toppingPrice;
+
     private boolean[] boolTop;
     private Calendar calendar;
 
@@ -326,7 +329,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         output = lineReader.split(";");
 
 
-                        pizzaList[counter] = output[0];
+                        pizzaList[counter]  = output[0];
+                        pizzaPrice[counter] = Double.valueOf(output[1]);
                         // porder[cntPiz].setPizzaName(output[0]);
                         // porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
@@ -362,7 +366,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         output = lineReader.split(";");
 
 
-                        toppingList[counter] = output[0];
+                        toppingList[counter]    = output[0];
+                        toppingPrice[counter]   = Double.valueOf(output[1]);
                         counter++;
                     }
                     csvFile++;
@@ -384,13 +389,14 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         try {
             switch (csvFile) {
                 case 0:
-                    inputStream = getResources().openRawResource(R.raw.pizza);
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    inputStream     = getResources().openRawResource(R.raw.pizza);
+                    reader          = new BufferedReader(new InputStreamReader(inputStream));
 
                     while ((lineReader = reader.readLine()) != null) {
                         counter++;
                     }
-                    pizzaList = new String[counter];
+                    pizzaList       = new String[counter];
+                    pizzaPrice      = new Double[counter];
                     break;
                 case 1:
                     inputStream = getResources().openRawResource(R.raw.sauce);
@@ -402,14 +408,15 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     sauceList = new String[counter];
                     break;
                 case 2:
-                    inputStream = getResources().openRawResource(R.raw.toppings);
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    inputStream     = getResources().openRawResource(R.raw.toppings);
+                    reader          = new BufferedReader(new InputStreamReader(inputStream));
 
                     while ((lineReader = reader.readLine()) != null) {
                         counter++;
                     }
-                    toppingList = new String[counter];
-                    boolTop = new boolean[counter];
+                    toppingList     = new String[counter];
+                    boolTop         = new boolean[counter];
+                    toppingPrice    = new Double[counter];
                 default:
                     return;
             }
