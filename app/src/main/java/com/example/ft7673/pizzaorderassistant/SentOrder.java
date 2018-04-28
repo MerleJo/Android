@@ -46,7 +46,7 @@ public class SentOrder extends Activity implements View.OnClickListener {
 
     private void receiveOrder() {
         Intent intent = getIntent();
-        MyOrder order = new MyOrder((Pizza[]) intent.getExtras().get("order"));
+        MyOrder order = new MyOrder((Pizza[]) intent.getExtras().get("order"));                     // brauchen wir Seriablizable wirklich?
 
         etTotal.setText(Double.toString(order.getTotal()));
         etOrder.setText(Arrays.toString(order.getOrder()).replaceAll("\\[|\\]", ""));

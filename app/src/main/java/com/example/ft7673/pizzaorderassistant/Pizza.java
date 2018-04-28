@@ -1,8 +1,6 @@
 package com.example.ft7673.pizzaorderassistant;
 
 
-import java.io.Serializable;
-
 public class Pizza {
 
     private String name;
@@ -15,7 +13,7 @@ public class Pizza {
     public Pizza(String name){
         this.name = name;
     }
-    public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){
+    public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){        // checken ob wir es brauchen
         this.name = name;
         this.dough = dough;
         this.size = size;
