@@ -35,6 +35,7 @@
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTakeAwayTitle">Please select time and adress</string>
+    <string name="alertTopTitle">Please select the extra toppings</string>
 
     <string name="alertPickupTimeTitle">Select Pickup Time</string>
 

@@ -24,7 +24,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Calendar;
 
-public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener, View.OnClickListener, DialogInterface.OnClickListener, AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener {
+public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener,
+        View.OnClickListener, DialogInterface.OnClickListener,
+        AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
+        DialogInterface.OnMultiChoiceClickListener{
 
 
     RadioGroup                      rdGroup;
@@ -41,13 +44,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Spinner                 spPizza;
     private Spinner                 spDough;
     private Spinner                 spSize;
-    private Spinner                 spTopp;
     private Spinner                 spSauce;
 
     private ArrayAdapter<String>    adprPizza;
+    private ArrayAdapter<String>    adprDough;
+    private ArrayAdapter<String>    adprSize;
+    private ArrayAdapter<String>    adprSauce;
 
     private int                     orderType = 0;                                                      // 1= Pizzeria, 2=Takeaway, 3=Delivery
     private int                     cntPiz;
+    private int                     csvFile;
     AlertDialog                     alertSize;
     AlertDialog                     alertTake;
 
@@ -59,6 +65,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private BufferedReader          reader;
 
     private String[]                pizzaList;
+    private String[]                sauceList;
+    private String[]                toppingList;
+    private String[]                pzSize;
 
     private Calendar                calendar;
 
@@ -66,6 +75,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private EditText                etPacking;
     private EditText                etAddress;
     private EditText                etPhone;
+
+    private boolean[]               selected;
+
+    private String[][]              order;
 
 
     @Override
@@ -83,8 +96,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         btnOrderOK.setOnClickListener(this);
 
         rdGroup.setOnCheckedChangeListener(this);
+        csvFile = 0;
 
-        pizzaList   = new String[15];
+        order       = new String[20][50];
+
 
     }
     @Override
@@ -129,7 +144,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         spPizza     = findViewById(R.id.spPizza);
         spDough     = findViewById(R.id.spDough);
         spSize      = findViewById(R.id.spSize);
-        spTopp      = findViewById(R.id.spTopp);
         spSauce     = findViewById(R.id.spSauce);
         //spPizza.setPromptId(R.string.hintPizza); need a hint
 
@@ -139,13 +153,31 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         btnAdd.setOnClickListener(this);
         btnCheckout.setOnClickListener(this);
 
-        readFile();
+        for(int i = 0 ; i<3 ; i++) {
+            getCsvSize();
+            readFile();
+        }
+        selected    = new boolean[pizzaList.length];
         adprPizza = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, pizzaList);
         adprPizza.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spPizza.setAdapter(adprPizza);
         spPizza.setOnItemSelectedListener(this);
+
+        adprSauce = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, sauceList);
+        adprSauce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spSauce.setAdapter(adprSauce);
+
+
+        pzSize = getResources().getStringArray(R.array.arraySizes);
+        adprSize = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, pzSize);
+        adprSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spSize.setAdapter(adprSize);
 
     }
 
@@ -163,6 +195,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 break;
             case R.id.btnAdd:
+
 
 
                 break;
@@ -203,47 +236,117 @@ private void getDeliveryInfo(){
         delivaddress = etAddress.getText().toString();
         delivphone = etPhone.getText().toString();
 }
-    public void readFile(){
+    public void readFile() {
 
         int counter = 0;
-        int fileNr  = 0;
-        switch (bla){
-            case 1:
-                inputStream = getResources().openRawResource(R.raw.pizza);
-                break;
-            case 2:
-                inputStream = getResources().openRawResource(R.raw.toppings);
-                break;
-            case 3:
-                inputStream = getResources().openRawResource(R.raw.sauce);
-                break;
-
-            default:
-                return;
-        }
-        inputStream = getResources().openRawResource(R.raw.pizza);
-        reader      = new BufferedReader(new InputStreamReader(inputStream));
-
         try {
+            switch (csvFile) {
+                case 0:
+                    inputStream = getResources().openRawResource(R.raw.pizza);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            while((lineReader = reader.readLine()) != null) {
+                    while ((lineReader = reader.readLine()) != null) {
 
-                output = lineReader.split(";");
-
-
-                pizzaList[counter] = output[0];
-
-                counter++;
-                }
+                        output = lineReader.split(";");
 
 
+                        pizzaList[counter] = output[0];
+
+                        counter++;
+
+                    }
+                    csvFile++;
+                    break;
+                case 1:
+                    inputStream = getResources().openRawResource(R.raw.sauce);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while((lineReader = reader.readLine()) != null) {
+
+                        output = lineReader.split(";");
+
+
+                        sauceList[counter] = output[0];
+
+                        counter++;
+
+                    }
+                    csvFile++;
+                    break;
+                case 2:
+                    inputStream = getResources().openRawResource(R.raw.toppings);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while((lineReader = reader.readLine()) != null) {
+
+                        output = lineReader.split(";");
+
+
+                        toppingList[counter] = output[0];
+
+                        counter++;
+
+                    }
+                    csvFile++;
+                default:
+                    return;
+            }
+
+
+            } catch (Exception e) {
+                Log.e("Reading failed", e.toString());
+
+            }
         }
 
+
+    public void getCsvSize(){
+
+        int counter = 0;
+        try {
+            switch (csvFile) {
+                case 0:
+                    inputStream = getResources().openRawResource(R.raw.pizza);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while ((lineReader = reader.readLine()) != null) {
+                        counter++;
+                    }
+
+
+                    pizzaList = new String[counter];
+                    break;
+                case 1:
+                    inputStream = getResources().openRawResource(R.raw.sauce);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while ((lineReader = reader.readLine()) != null) {
+                        counter++;
+                    }
+
+
+                    sauceList = new String[counter];
+                    break;
+                case 2:
+                    inputStream = getResources().openRawResource(R.raw.toppings);
+                    reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    while ((lineReader = reader.readLine()) != null) {
+                        counter++;
+                    }
+
+
+                    toppingList = new String[counter];
+                default:
+                    return;
+            }
+        }
         catch (Exception e ){
             Log.e("Reading failed",e.toString());
 
         }
-        readFile();
+
+
     }
 
     private void setPickupTime(){
@@ -288,6 +391,22 @@ private void getDeliveryInfo(){
         return alertSize;
     }
 
+    private AlertDialog toppings(){
+        AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
+        diabuilder.setTitle(R.string.alertTopTitle);
+        // .setIcon()        noch einfügen
+
+        diabuilder.setPositiveButton(R.string.btnOK, this);
+        diabuilder.setNegativeButton(R.string.btnCancel, this);
+        diabuilder.setMultiChoiceItems(pizzaList, selected, this);
+
+
+        alertTake = diabuilder.create();
+        alertTake.show();
+
+        return alertSize;
+    }
+
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
@@ -309,10 +428,18 @@ private void getDeliveryInfo(){
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+        order[0][cntPiz] = pizzaList[i];                //speichert die Pizza beim anklicken im Spinner in das speicherarray
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
+        if(b == true){
+
+        }
     }
 }
