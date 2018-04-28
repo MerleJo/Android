@@ -48,4 +48,11 @@
         <item name="sizeMedium">Medium</item>
          <item name="sizeBig">Big</item>
     </string-array>
+
+    <string-array name="arrayDough">
+        <item name="dough1">Neopolitan</item>
+        <item name="dough2">Chicago</item>
+        <item name="dough3">New York</item>
+        <item name="dough4">Sicilian</item>
+    </string-array>
 </resources>

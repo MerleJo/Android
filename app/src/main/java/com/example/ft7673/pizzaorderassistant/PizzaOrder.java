@@ -14,10 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -29,7 +31,7 @@ import java.util.Calendar;
 public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener,
         View.OnClickListener, DialogInterface.OnClickListener,
         AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
-        DialogInterface.OnMultiChoiceClickListener{
+        DialogInterface.OnMultiChoiceClickListener, CompoundButton.OnCheckedChangeListener {
 
 
     RadioGroup                      rdGroup;
@@ -48,6 +50,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Spinner                 spDough;
     private Spinner                 spSize;
     private Spinner                 spSauce;
+    private Switch                  topSw;
 
     private ArrayAdapter<String>    adprPizza;
     private ArrayAdapter<String>    adprDough;
@@ -71,7 +74,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private String[]                sauceList;
     private String[]                toppingList;
     private String[]                pzSize;
+    private String[]                dough;
 
+    private boolean[]               boolTop;
     private Calendar                calendar;
 
     private EditText                etPickedTime;
@@ -150,7 +155,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         spDough     = findViewById(R.id.spDough);
         spSize      = findViewById(R.id.spSize);
         spSauce     = findViewById(R.id.spSauce);
-        //spPizza.setPromptId(R.string.hintPizza); need a hint
+        topSw       = findViewById(R.id.topSw);
+        //spPizza.setPromptId(R.string.hintPizza); //need a hint
 
         btnAdd      = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
@@ -191,6 +197,17 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         adprSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spSize.setAdapter(adprSize);
+
+        dough = getResources().getStringArray(R.array.arrayDough);
+
+        adprDough = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, dough);
+        adprDough.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spDough.setAdapter(adprDough);
+
+        topSw.setOnCheckedChangeListener(this);
+
 
     }
 
@@ -282,11 +299,11 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                        //pizzaList[counter] = output[0];
-                        porder[counter].setPizzaName(output[0]);
-                        porder[counter].setPizzaPrice(Double.parseDouble(output[1]));                   // ins CSV File noch den Preis reinschreiben
+                        pizzaList[counter] = output[0];
+                        //porder[counter].setPizzaName(output[0]);
+                        //porder[counter].setPizzaPrice(Double.parseDouble(output[1]));                   // ins CSV File noch den Preis reinschreiben
 
-                        //counter++;
+                        counter++;
 
                     }
                     csvFile++;
@@ -300,11 +317,11 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                        //sauceList[counter] = output[0];
-                        //counter++;
+                        sauceList[counter] = output[0];
+                        counter++;
 
-                        porder[counter].setPizzaSauce(output[0]);
-                        porder[counter].setPizzaPrice(Double.parseDouble(output[1]));
+                        //porder[counter].setPizzaSauce(output[0]);
+                        //porder[counter].setPizzaPrice(Double.parseDouble(output[1]));
 
                     }
                     csvFile++;
@@ -318,8 +335,8 @@ private void getDeliveryInfo(){
                         output = lineReader.split(";");
 
 
-                       // toppingList[counter] = output[0];
-                       // counter++;
+                        toppingList[counter] = output[0];
+                        counter++;
 
                         //porder[counter].setPizzaToppings(output[0]);                               String Array oder String?
                        // porder[counter].setPizzaPrice();                                              wie Preis berechnen
@@ -374,6 +391,7 @@ private void getDeliveryInfo(){
 
 
                     toppingList = new String[counter];
+                    boolTop      = new boolean[counter];
                 default:
                     return;
             }
@@ -435,7 +453,7 @@ private void getDeliveryInfo(){
 
         diabuilder.setPositiveButton(R.string.btnOK, this);
         diabuilder.setNegativeButton(R.string.btnCancel, this);
-        diabuilder.setMultiChoiceItems(pizzaList, selected, this);
+        diabuilder.setMultiChoiceItems(toppingList, selected, this);
 
 
         alertTake = diabuilder.create();
@@ -478,7 +496,17 @@ private void getDeliveryInfo(){
     @Override
     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
         if(b == true){
-
+            boolTop[i] = true;
         }
+        boolTop[i] = false;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if (compoundButton.isChecked()){
+            toppings();
+            compoundButton.setChecked(false);
+    }
     }
 }
+
