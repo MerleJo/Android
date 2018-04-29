@@ -52,7 +52,7 @@ public class SentOrder extends Activity implements View.OnClickListener {
 
     private void receiveOrder() {
         Intent intent = getIntent();
-        MyOrder order = new MyOrder((Pizza[]) intent.getExtras().get("order"));                     // brauchen wir Seriablizable wirklich?
+        MyOrder order = (MyOrder)intent.getSerializableExtra("order");                     // brauchen wir Seriablizable wirklich?
         switch (intent.getExtras().getInt("ordertype")){
             case 1:
                etOrderType.setText(R.string.rdbtPizzeria);

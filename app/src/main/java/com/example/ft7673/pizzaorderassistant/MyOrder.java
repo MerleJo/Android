@@ -1,7 +1,9 @@
 package com.example.ft7673.pizzaorderassistant;
 
 
-public class MyOrder {
+import java.io.Serializable;
+
+public class MyOrder implements Serializable{
     private double total;
     private Pizza[] order;
 

@@ -1,7 +1,9 @@
 package com.example.ft7673.pizzaorderassistant;
 
 
-public class Pizza {
+import java.io.Serializable;
+
+public class Pizza implements Serializable{
 
     private String name;
     private String dough;
