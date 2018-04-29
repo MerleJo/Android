@@ -82,7 +82,7 @@ public class SentOrder extends Activity implements View.OnClickListener, Adapter
         String [] help = new String[100];
         help = order.writeOrder();
         for (int i = 0; i < help.length; i++) {
-            if (help[i].equals(null)) {
+            if (help[i] == null) {
 
             } else {
                 listing.add(help[i]);
