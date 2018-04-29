@@ -41,8 +41,18 @@ public class MyOrder implements Serializable{
             if(order[i] == null){
                 break;
             }else{
-                toSave[i] = order[i].getPizzaDough() + "\n" + order[i].getPizzaToppings() + "\n" +
-                        order[i].getPizzaSauce();
+                String saveTop = "";
+                for(int j = 0; j < order[i].getPizzaToppings().length; j++){
+                    if (j+1 != order[i].getPizzaToppings().length){
+                        saveTop = saveTop + order[i].getPizzaToppings()[j] + ", ";
+                    }else{
+                        saveTop = saveTop + order[i].getPizzaToppings()[j];
+                    }
+
+                }
+                toSave[i] = "Dough: " + order[i].getPizzaDough() + "\n" +
+                            "Toppings: " + saveTop + "\n" +
+                            "Sauce: " + order[i].getPizzaSauce();
             }
         }
         return toSave;
