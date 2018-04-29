@@ -39,6 +39,8 @@
     <string name="toastSelectType">Please select an order type first.</string>
     <string name="toastSelectTime">Please select a time</string>
     <string name="toastSelectPckOpt">Please select a packing option</string>
+    <string name="toastSelectAdress">Please select an adress</string>
+    <string name="toastSelectPhNr">Please select a phone number</string>
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTakeAwayTitle">Please select time and adress</string>

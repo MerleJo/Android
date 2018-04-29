@@ -352,14 +352,23 @@ private AlertDialog selectTable(){
                 }
                 break;
             case R.id.btnDeliveryOK:
-                myOrder = new MyOrder(porder);
-                intent = new Intent(this, SentOrder.class);
-                intent.putExtra("order", myOrder);
-                intent.putExtra("ordertype", orderType);
-                intent.putExtra("address", "Delivery Address: " + etAddress.getText().toString());
-                intent.putExtra("phone", "Phonenumber: " + etPhone.getText().toString());
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, R.string.resultConf);
+                if(etAddress.getText().toString().equals("")){
+                    Toast.makeText(this, R.string.toastSelectAdress, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else if(etPhone.getText().toString().equals("")){
+                    Toast.makeText(this, R.string.toastSelectPhNr, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    myOrder = new MyOrder(porder);
+                    intent = new Intent(this, SentOrder.class);
+                    intent.putExtra("order", myOrder);
+                    intent.putExtra("ordertype", orderType);
+                    intent.putExtra("address", "Delivery Address: " + etAddress.getText().toString());
+                    intent.putExtra("phone", "Phonenumber: " + etPhone.getText().toString());
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, R.string.resultConf);
+                    }
                 }
                 break;
         }
