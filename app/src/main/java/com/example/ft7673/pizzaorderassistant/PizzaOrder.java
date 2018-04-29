@@ -35,64 +35,64 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private View                orderView;
 
-    RadioGroup                  rdGroup;
-    RadioButton                 rdbtPizzeria;
-    RadioButton                 rdbtTakeaway;
-    RadioButton                 rdbtDelivery;
-    Button                      btnOrderOK;
-    Button                      btnPickupOK;
+    private RadioGroup                  rdGroup;
+    private RadioButton                 rdbtPizzeria;
+    private RadioButton                 rdbtTakeaway;
+    private RadioButton                 rdbtDelivery;
+    private Button                      btnOrderOK;
+    private Button                      btnPickupOK;
 
-    Button btnCheckout;
-    Button btnAdd;
-    Button btnDeliveryOK;
-    CheckBox cbTable;
+    private Button                      btnCheckout;
+    private Button                      btnAdd;
+    private Button                      btnDeliveryOK;
+    private CheckBox                    cbTable;
 
-    private Spinner spPizza;
-    private Spinner spDough;
-    private Spinner spSize;
-    private Spinner spSauce;
-    private Switch topSw;
+    private Spinner                     spPizza;
+    private Spinner                     spDough;
+    private Spinner                     spSize;
+    private Spinner                     spSauce;
+    private Switch                      topSw;
 
-    private ArrayAdapter<String> adprPizza;
-    private ArrayAdapter<String> adprDough;
-    private ArrayAdapter<String> adprSize;
-    private ArrayAdapter<String> adprSauce;
+    private ArrayAdapter<String>        adprPizza;
+    private ArrayAdapter<String>        adprDough;
+    private ArrayAdapter<String>        adprSize;
+    private ArrayAdapter<String>        adprSauce;
 
-    private int                     orderType = 0;                                                      // 1= Pizzeria, 2=Takeaway, 3=Delivery
-    private int                     cntPiz = 0;
-    private int                     csvFile;
-    private Double                  priceHelperPz;
-    AlertDialog                     alertSize;
-    AlertDialog                     alertTake;
-    AlertDialog                     alertTopping;
+    private int                         orderType = 0;                                              // 1= Pizzeria, 2=Takeaway, 3=Delivery
+    private int                         cntPiz = 0;
+    private int                         csvFile;
+    private Double                      priceHelperPz;
+    AlertDialog                         alertSize;
+    AlertDialog                         alertTake;
+    AlertDialog                         alertTopping;
 
-    private InputStream inputStream;
-    private String[] output;
-    private String lineReader;
-    private String delivaddress;
-    private String delivphone;
-    private BufferedReader reader;
+    private InputStream                 inputStream;
+    private String[]                    output;
+    private String                      lineReader;
+    private String                      delivaddress;
+    private String                      delivphone;
+    private BufferedReader              reader;
 
-    private String[] pizzaList;
-    private String[] sauceList;
-    private String[] toppingList;
-    private String[] pzSizeList;
-    private String[] doughList;
+    private String[]                    pizzaList;
+    private String[]                    sauceList;
+    private String[]                    toppingList;
+    private String[]                    pzSizeList;
+    private String[]                    doughList;
 
-    private Double[] pizzaPrice;
-    private Double[] toppingPrice;
+    private Double[]                    pizzaPrice;
+    private Double[]                    toppingPrice;
 
-    private boolean[] boolTop;
-    private Calendar calendar;
+    private boolean[]                   boolTop;
+    private Calendar                    calendar;
 
-    private EditText etPickedTime;
-    private EditText etPacking;
-    private EditText etAddress;
-    private EditText etPhone;
+    private EditText                    etPickedTime;
+    private EditText                    etPacking;
+    private EditText                    etAddress;
+    private EditText                    etPhone;
 
-    private boolean[] selected;
+    private boolean[]                   selected;
 
-    private Pizza[] porder = new Pizza[12];
+    private Pizza[]                     porder;
     Intent intent;
 
 
@@ -102,19 +102,20 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         setContentView(R.layout.order_type);
 
 
-        rdGroup = findViewById(R.id.rdGroup);
-        rdbtPizzeria = findViewById(R.id.rdbtPizzeria);
-        rdbtTakeaway = findViewById(R.id.rdbtTakeaway);
-        rdbtDelivery = findViewById(R.id.rdbtDelivery);
+        rdGroup         =  findViewById(R.id.rdGroup);
+        rdbtPizzeria    =  findViewById(R.id.rdbtPizzeria);
+        rdbtTakeaway    =  findViewById(R.id.rdbtTakeaway);
+        rdbtDelivery    =  findViewById(R.id.rdbtDelivery);
 
-        btnOrderOK = findViewById(R.id.btnOrderTypeOK);
+        btnOrderOK      =  findViewById(R.id.btnOrderTypeOK);
         btnOrderOK.setOnClickListener(this);
 
         rdGroup.setOnCheckedChangeListener(this);
-        csvFile = 0;
+        csvFile         = 0;
 
         priceHelperPz = 0.00;
 
+        porder         = new Pizza[25];
 
     }
 
@@ -150,7 +151,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
 
             default:
-                // Benötigt?
+                break;
         }
     }
 
@@ -164,9 +165,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         spSize = findViewById(R.id.spSize);
         spSauce = findViewById(R.id.spSauce);
         topSw = findViewById(R.id.topSw);
-        //spPizza.setPromptId(R.string.hintPizza); //need a hint
-
-
 
         btnAdd = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
@@ -346,6 +344,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             if (boolTop[i] == true) {
                 help[counter] = toppingList[i];
                 counter++;
+            }
+            else{
+                
             }
         }
         if(counter == 0){
