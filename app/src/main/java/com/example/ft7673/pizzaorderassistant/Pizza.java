@@ -49,8 +49,9 @@ public class Pizza {
     public String[] getPizzaToppings(){
         return this.toppings;
     }
-    public void setPizzaToppings(String toppings){
-        this.toppings[cntTopping] = toppings;
+    public void setPizzaToppings(String[] toppings){
+        this.toppings = toppings;
+
     }
     public String getPizzaSauce(){
         return this.sauce;

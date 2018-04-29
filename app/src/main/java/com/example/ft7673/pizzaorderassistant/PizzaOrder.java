@@ -312,14 +312,40 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
             return false;
-        }else if(porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
+        }else if(porder[cntPiz].getPizzaDough().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoDough, Toast.LENGTH_LONG).show();
             return false;
-        }else if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))){
+        }else if(porder[cntPiz].getPizzaSize().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoSize, Toast.LENGTH_LONG).show();
             return false;
         }
+        else{
+            porder[0].setPizzaToppings(fillTops());
+        }
+
         return true;
+    }
+
+    private String[] fillTops() {
+        int counter = 0;
+        for (int i = 0; i < toppingList.length; i++) {
+            if (boolTop[i] == true) {
+                counter++;
+            }
+        }
+        String[] help = new String[counter];
+        counter = 0;
+        for (int i = 0; i < toppingList.length; i++){
+            if (boolTop[i] == true) {
+                help[counter] = toppingList[i];
+                counter++;
+            }
+        }
+        if(counter == 0){
+            help = new String[1];
+            help[0] = "none";
+        }
+        return help;
     }
 
     public void readFile() {
