@@ -10,6 +10,7 @@ public class Pizza implements Serializable{
     private String size;
     private String[] toppings;
     private String sauce;
+    private boolean tableSauce;
     private double price;
 
     public Pizza(String name){
@@ -17,6 +18,7 @@ public class Pizza implements Serializable{
         this.dough      = "not selected";
         this.sauce      = "none";
         this.size       = "not selected";
+        tableSauce = false;
     }
     /*public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){        // checken ob wir es brauchen
         this.name = name;
@@ -64,5 +66,10 @@ public class Pizza implements Serializable{
     }
     public void setPizzaPrice(double price){
         this.price = this.price + price;
+    }
+    public boolean getTableSauce(){
+        return tableSauce;
+    }public void setTableSauce(boolean tableSauce){
+        this.tableSauce = tableSauce;
     }
 }

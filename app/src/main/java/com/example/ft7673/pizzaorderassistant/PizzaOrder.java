@@ -611,10 +611,10 @@ public void resetTop(){                                                         
         }
         if(adapterView == spSauce){
             if(cbTable.isChecked()){
-
-            }else{
-                porder[cntPiz].setPizzaSauce(sauceList[i]);
+                porder[cntPiz].setTableSauce(true);
             }
+            porder[cntPiz].setPizzaSauce(sauceList[i]);
+
 
         }
         if(adapterView == spSize){

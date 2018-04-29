@@ -6,9 +6,11 @@ import java.io.Serializable;
 public class MyOrder implements Serializable{
     private double total = 0.00;
     private Pizza[] order;
+    private String tableSauceList;
 
     public MyOrder(Pizza[] order){
         this.order = order;
+        this.tableSauceList = "none";
         for(int i = 0; i < order.length; i++){
             if(order[i] == null){
                 break;
@@ -56,5 +58,20 @@ public class MyOrder implements Serializable{
             }
         }
         return toSave;
+    }
+    public String findTableSauce(){
+        for (int i = 0; i < order.length; i++){
+            if(order[i] == null){
+                break;
+            }else if (order[i].getTableSauce() == true){
+                if(tableSauceList.equals("none")){
+                    tableSauceList = order[i].getPizzaSauce();
+                }else{
+                    tableSauceList = tableSauceList + ", " +order[i].getPizzaSauce();
+                }
+                order[i].setPizzaSauce("none");
+            }
+        }
+        return tableSauceList;
     }
 }

@@ -24,7 +24,9 @@ public class SentOrder extends Activity implements View.OnClickListener,
     TextView txtOrderType;
     TextView firstInfo;
     TextView secondInfo;
+    TextView txtTableSauce;
     ListView list;
+    String   tableSauceString;
     String[] helpTitle = new String[100];
     String[] helpInfo = new String[100];
 
@@ -38,6 +40,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
         txtOrderType = findViewById(R.id.txtOrderType);
         firstInfo = findViewById(R.id.txtFirst);
         secondInfo = findViewById(R.id.txtSecond);
+        txtTableSauce = findViewById(R.id.txtTableSauce);
         list = (ListView) findViewById(R.id.listing);
 
         btnSendOK = findViewById(R.id.btnSendOK);
@@ -64,6 +67,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
     private void receiveOrder() {
         Intent intent = getIntent();
         MyOrder order = (MyOrder) intent.getSerializableExtra("order");
+        tableSauceString = order.findTableSauce();
         switch (intent.getExtras().getInt("ordertype")) {
             case 1:
                 txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtPizzeria).toString());
@@ -80,6 +84,9 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 break;
         }
         txtMoney.setText(Double.toString(order.getTotal()));
+        if(!(tableSauceString.equals("none"))){
+            txtTableSauce.setText("Sauce for the table: " + tableSauceString);
+        }
         final ArrayList<String> listing = new ArrayList<String>();
 
         helpTitle = order.writeOrder();
