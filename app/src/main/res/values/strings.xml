@@ -44,6 +44,8 @@
 
     <string name="alertPickupTimeTitle">Select Pickup Time</string>
 
+    <string name="alertTableTitle">Select Table</string>
+
     <string name="mesConfirmation">Order was successfully received.</string>
 
     <string name="stringNotSelected">not selected</string>

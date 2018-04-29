@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -65,6 +68,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Double                      priceHelperPz;
     AlertDialog                         alertSize;
     AlertDialog                         alertTopping;
+    AlertDialog                         alertTable;
 
     private InputStream                 inputStream;
     private String[]                    output;
@@ -88,6 +92,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private EditText                    etPacking;
     private EditText                    etAddress;
     private EditText                    etPhone;
+    private EditText                    tableNr;
 
     private boolean[]                   selected;
 
@@ -96,6 +101,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     MyOrder                             myOrder;
     TextView                            txtPickedTime;
     TextView                            txtPackingSelect;
+    int                                 selectedTable;
+    NumberPicker                        numberPicker;
 
 
     @Override
@@ -225,11 +232,32 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     }
+private AlertDialog selectTable(){
+        numberPicker = new NumberPicker(this);
+        numberPicker.setMinValue(1);
+        numberPicker.setMaxValue(20);// 20 tables in the pizzeria
 
+        tableNr = new EditText(this);
+        tableNr.setInputType(InputType.TYPE_CLASS_NUMBER);
+        tableNr.setRawInputType(Configuration.KEYBOARD_12KEY);
+        AlertDialog.Builder diabuiler = new AlertDialog.Builder(this);
+        diabuiler.setTitle(R.string.alertTableTitle)
+                .setView(tableNr)
+                .setPositiveButton(R.string.btnOK, this);
+        // setICon
+        diabuiler.create();
+        alertTable = diabuiler.show();
+        return alertTable;
+
+
+}
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnOrderTypeOK:
+                if(rdGroup.getCheckedRadioButtonId() ==  rdbtPizzeria.getId()){
+                    selectTable();
+                }
                 if (rdGroup.getCheckedRadioButtonId() != -1) {
                     defineOrder();
                 }
@@ -292,7 +320,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 intent = new Intent(this, SentOrder.class);
                 intent.putExtra("order", myOrder);
                 intent.putExtra("ordertype", orderType);
-                intent.putExtra("packing", "Packing: " + etPacking.getText().toString());
+                intent.putExtra("packing", "Packing: " + txtPackingSelect.getText().toString());
                 intent.putExtra("time", "Pickup Time: " + txtPickedTime.getText().toString());
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivityForResult(intent, R.string.resultConf);
@@ -478,7 +506,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         picker = new TimePickerDialog(this, this, hour, minute, true);
         picker.setTitle(R.string.alertPickupTimeTitle);
         //.setIcon noch einfügen
-       // picker.create();
         picker.show();
     }
 
@@ -525,6 +552,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
             switch (which) {
 
+            }
+        } else if(dialog == alertTable){
+            if(which == DialogInterface.BUTTON_POSITIVE){                               // braucht man das?
+                numberPicker.getValue();
             }
         } else if (dialog == alertTopping) {
             boolean help = false;
@@ -618,9 +649,6 @@ public void resetTop(){                                                         
         switch (v.getId()){
             case R.id.txtPickedTime:
                 setPickupTime();
-                return true;
-            case R.id.txtPackingSelect:
-                // Alert Dialog muss hier noch aufgerufen werden (ist noch nicht geschrieben)
                 return true;
 
         }
