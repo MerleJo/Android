@@ -51,9 +51,10 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
         switch (v.getId()) {                                                                         // nicht nötig falls kein anderer Button noch gebraucht wird
             case R.id.btnSendOK:
-                Intent intent = new Intent();                                                    // keine Bestätigung gefordert, wollen wir das machen? weil so funktioniert das leider noch nicht
+                Intent intent = new Intent(this, PizzaOrder.class);                                                    // keine Bestätigung gefordert, wollen wir das machen? weil so funktioniert das leider noch nicht
                 intent.putExtra("confirmation", R.string.mesConfirmation);
-                setContentView(R.layout.order_type);
+                setResult(R.string.resultConf, intent);
+                finish();
                 // welche Dinge noch zurücksetzen?
                 break;
             default:
@@ -63,18 +64,18 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
     private void receiveOrder() {
         Intent intent = getIntent();
-        MyOrder order = (MyOrder) intent.getSerializableExtra("order");                     // brauchen wir Seriablizable wirklich?
+        MyOrder order = (MyOrder) intent.getSerializableExtra("order");
         switch (intent.getExtras().getInt("ordertype")) {
             case 1:
-                txtOrderType.setText(R.string.rdbtPizzeria);
+                txtOrderType.setText("Option" + R.string.rdbtPizzeria);
                 break;
             case 2:
-                txtOrderType.setText(R.string.rdbtTakeaway);
+                txtOrderType.setText("Option" + R.string.rdbtTakeaway);
                 firstInfo.setText(intent.getExtras().getString("packing"));
                 secondInfo.setText(intent.getExtras().getString("time"));
                 break;
             case 3:
-                txtOrderType.setText(R.string.rdbtDelivery);
+                txtOrderType.setText("Option" + R.string.rdbtDelivery);
                 firstInfo.setText(intent.getExtras().getString("address"));
                 secondInfo.setText(intent.getExtras().getString("phone"));
                 break;
@@ -91,25 +92,16 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 listing.add(helpTitle[i]);
             }
         }
-        //listing.add(order.writeOrder());
         ArrayAdapter<String> adap = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listing);
         list.setAdapter(adap);
-        list.setOnItemLongClickListener(this);      //noch Logik schreiben
-
-        //txtOrderList.setText(order.writeOrder());
-        // txtOrderList.setText(Arrays.toString(order.getOrder()).replaceAll("\\[|\\]", ""));
-
+        list.setOnItemLongClickListener(this);
 
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        //if(view.getId() == list.getId()){
             showOrderDetails(position);
             return true;
-       // }
-
-        //return false;
     }
 
     private AlertDialog showOrderDetails(int pos) {
