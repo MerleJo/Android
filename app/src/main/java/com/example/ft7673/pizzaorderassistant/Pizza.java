@@ -7,13 +7,11 @@ public class Pizza {
     private String dough;
     private String size;
     private String[] toppings;
-    private int cntTopping;
     private String sauce;
     private double price;
 
     public Pizza(String name){
         this.name = name;
-        this.cntTopping = 0;
         this.dough      = "not selected";
         this.sauce      = "none";
         this.size       = "not selected";
