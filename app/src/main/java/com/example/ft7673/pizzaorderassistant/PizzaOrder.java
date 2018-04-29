@@ -63,7 +63,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private int                         csvFile;
     private Double                      priceHelperPz;
     AlertDialog                         alertSize;
-    AlertDialog                         alertTake;
     AlertDialog                         alertTopping;
 
     private InputStream                 inputStream;
@@ -82,7 +81,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Double[]                    pizzaPrice;
     private Double[]                    toppingPrice;
 
-    private boolean[]                   boolTop;
+    //private boolean[]                   boolTop;
     private Calendar                    calendar;
 
     private EditText                    etPickedTime;
@@ -113,9 +112,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         rdGroup.setOnCheckedChangeListener(this);
         csvFile         = 0;
 
-        priceHelperPz = 0.00;
+        priceHelperPz   = 0.00;
 
-        porder         = new Pizza[25];
+        porder          = new Pizza[25];
 
     }
 
@@ -158,20 +157,21 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     public void defineOrder() {
         setContentView(R.layout.activity_main);
 
-        orderView = findViewById(R.id.orderView);
+        orderView   = findViewById(R.id.orderView);
 
-        spPizza = findViewById(R.id.spPizza);
-        spDough = findViewById(R.id.spDough);
-        spSize = findViewById(R.id.spSize);
-        spSauce = findViewById(R.id.spSauce);
-        topSw = findViewById(R.id.topSw);
+        spPizza     = findViewById(R.id.spPizza);
+        spDough     = findViewById(R.id.spDough);
+        spSize      = findViewById(R.id.spSize);
+        spSauce     = findViewById(R.id.spSauce);
+        topSw       = findViewById(R.id.topSw);
 
-        btnAdd = findViewById(R.id.btnAdd);
+        btnAdd      = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
-        cbTable = findViewById(R.id.cbTable);
+        cbTable     = findViewById(R.id.cbTable);
 
         btnAdd.setOnClickListener(this);
         btnCheckout.setOnClickListener(this);
+
         if (orderType == 1) {
             cbTable.setVisibility(View.VISIBLE);
             cbTable.setOnClickListener(this);
@@ -184,35 +184,35 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             getCsvSize();
             readFile();
         }
-        selected = new boolean[pizzaList.length];
-        adprPizza = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, pizzaList);
+        selected    = new boolean[pizzaList.length];
+        adprPizza   = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, pizzaList);
         adprPizza.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spPizza.setAdapter(adprPizza);
         spPizza.setOnItemSelectedListener(this);
 
 
-        adprSauce = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, sauceList);
+        adprSauce   = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, sauceList);
         adprSauce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spSauce.setAdapter(adprSauce);
         spSauce.setOnItemSelectedListener(this);
 
 
-        pzSizeList = getResources().getStringArray(R.array.arraySizes);
-        adprSize = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, pzSizeList);
+        pzSizeList  = getResources().getStringArray(R.array.arraySizes);
+        adprSize    = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, pzSizeList);
         adprSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spSize.setAdapter(adprSize);
         spSize.setOnItemSelectedListener(this);
 
-        doughList = getResources().getStringArray(R.array.arrayDough);
+        doughList   = getResources().getStringArray(R.array.arrayDough);
 
-        adprDough = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, doughList);
+        adprDough   = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, doughList);
         adprDough.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spDough.setAdapter(adprDough);
@@ -229,11 +229,12 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             case R.id.btnOrderTypeOK:
                 if (rdGroup.getCheckedRadioButtonId() != -1) {
                     defineOrder();
-                } else {
+                }
+                else {
                     Toast.makeText(this, R.string.toastSelectType, Toast.LENGTH_LONG).show();
                 }
-
                 break;
+
             case R.id.btnAdd:
                 if (checkPizzaInfo()){
                     cntPiz++;
@@ -247,31 +248,31 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
                 switch (orderType) {
-                    case 1:                                                                          // in Pizzeria
+                    case 1:                                                                         // in Pizzeria
                         MyOrder myOrder = new MyOrder(porder);
                         intent = new Intent(this, SentOrder.class);
                         intent.putExtra("order", myOrder);
                         intent.putExtra("ordertype", orderType);
                         //intent.putExtra("tableNR", tableNR);                                      // noch als Extra implementierbar
-  //                      if (intent.resolveActivity(getPackageManager()) != null) {
+                        if (intent.resolveActivity(getPackageManager()) != null) {
                             startActivity(intent);
-   //                     }
+                        }
                         break;
                     case 2:
                         setContentView(R.layout.takeaway_info);
                         etPickedTime = findViewById(R.id.etPickedTime);
                         etPacking = findViewById(R.id.etPacking);
                         btnPickupOK = findViewById(R.id.btnPickupOK);
-                        btnPickupOK.setOnClickListener(this);// noch Funktion hinterlegen
+                        btnPickupOK.setOnClickListener(this);
 
-                        // Packing Options  Auswahl noch hinzufügen
+                                                                                                    // Packing Options  Auswahl noch hinzufügen
                         break;
                     case 3:
                         setContentView(R.layout.delivery_info);
                         etAddress = findViewById(R.id.etAddress);
                         etPhone = findViewById(R.id.eTPhone);
                         btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
-                        btnDeliveryOK.setOnClickListener(this); // noch Funktion hinterlegen
+                        btnDeliveryOK.setOnClickListener(this);
                         getDeliveryInfo();
 
                         break;
@@ -308,10 +309,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     private void getDeliveryInfo() {
-        delivaddress = etAddress.getText().toString();
-        delivphone = etPhone.getText().toString();
+        delivaddress    = etAddress.getText().toString();
+        delivphone      = etPhone.getText().toString();
     }
-    private boolean checkPizzaInfo(){                                                               // nicht nötig wenn wir nur zeigen, wenn ausgewählt wurde
+    private boolean checkPizzaInfo(){
         if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
             return false;
@@ -330,10 +331,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     private String[] fillTops() {
-        int counter = 0;
+        int counter     = 0;
         double topPrice = 0.00;
         for (int i = 0; i < toppingList.length; i++) {
-            if (boolTop[i] == true) {
+            if (selected[i] == true) {
                 topPrice += toppingPrice[i];
                 counter++;
             }
@@ -341,16 +342,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         String[] help = new String[counter];
         counter = 0;
         for (int i = 0; i < toppingList.length; i++){
-            if (boolTop[i] == true) {
+            if (selected[i] == true) {
                 help[counter] = toppingList[i];
                 counter++;
             }
             else{
-                
+
             }
         }
         if(counter == 0){
-            help = new String[1];
+            help    = new String[1];
             help[0] = "none";
         }
         else{
@@ -367,7 +368,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             switch (csvFile) {
                 case 0:
                     inputStream = getResources().openRawResource(R.raw.pizza);
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    reader      = new BufferedReader(new InputStreamReader(inputStream));
 
                     while ((lineReader = reader.readLine()) != null) {
 
@@ -376,8 +377,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                         pizzaList[counter]  = output[0];
                         pizzaPrice[counter] = Double.parseDouble(output[1]);
-                        // porder[cntPiz].setPizzaName(output[0]);
-                        // porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
+
 
                         counter++;
 
@@ -386,7 +386,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     break;
                 case 1:
                     inputStream = getResources().openRawResource(R.raw.sauce);
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    reader      = new BufferedReader(new InputStreamReader(inputStream));
 
                     while ((lineReader = reader.readLine()) != null) {
 
@@ -396,8 +396,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         sauceList[counter] = output[0];
                         counter++;
 
-                        // porder[cntPiz].setPizzaSauce(output[0]);
-                        //porder[cntPiz].setPizzaPrice(Double.parseDouble(output[1]));
 
                     }
                     csvFile++;
@@ -445,7 +443,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     break;
                 case 1:
                     inputStream = getResources().openRawResource(R.raw.sauce);
-                    reader = new BufferedReader(new InputStreamReader(inputStream));
+                    reader      = new BufferedReader(new InputStreamReader(inputStream));
 
                     while ((lineReader = reader.readLine()) != null) {
                         counter++;
@@ -460,7 +458,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         counter++;
                     }
                     toppingList     = new String[counter];
-                    boolTop         = new boolean[counter];
                     toppingPrice    = new Double[counter];
                 default:
                     return;
@@ -474,8 +471,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     private void setPickupTime() {
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        int hour    = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute  = calendar.get(Calendar.MINUTE);
         TimePickerDialog picker;
 
         picker = new TimePickerDialog(this, this, hour, minute, true);
@@ -503,20 +500,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         return alertSize;
     }
 
-    /* private AlertDialog takeAway(){                                                           haben wir jetzt ja über Layout gelöst
-         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
-         diabuilder.setTitle(R.string.alertTakeAwayTitle);
-                 // .setIcon()        noch einfügen
 
-                 //Spinner schreiben
-
-
-         alertTake = diabuilder.create();
-         alertTake.show();
-
-         return alertTake;
-     }
- */
     private AlertDialog toppings() {
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder.setTitle(R.string.alertTopTitle);
@@ -541,23 +525,46 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             switch (which) {
 
             }
-        } else if (dialog == alertTake) {
+        } else if (dialog == alertTopping) {
+            boolean help = false;
             switch (which) {
-
+                case DialogInterface.BUTTON_POSITIVE:
+                    for (int i = 0; i < toppingList.length; i++) {
+                        if (selected[i] == true) {
+                            help = true;
+                        } else {
+                            continue;
+                        }
+                    }
+                    if (help) {
+                        topSw.setChecked(true);
+                    } else {
+                        topSw.setChecked(false);
+                    }
+                    break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        resetTop();
+                        break;
             }
         }
+        }
 
-    }
+public void resetTop(){                                                                             // resets the topping list when cancel is hit
+        for (int i = 0; i < toppingList.length ; i++){
+            selected[i] = false;
+        }
+}
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {              // handles the spinners
 
         if (adapterView == spPizza) {
             Pizza help = new Pizza(pizzaList[i]);
-            porder[cntPiz] = help;                  // jedes mal wenn de pizza geändert wird, wird alles andere wieder null gesetzt.
+            porder[cntPiz] = help;                                                                  // jedes mal wenn de pizza geändert wird, wird alles andere wieder null gesetzt.
             priceHelperPz = pizzaPrice[i];
 
-            if(spPizza.getSelectedItem().toString().equals(getResources().getString(R.string.stringNotSelected))){
+            if(spPizza.getSelectedItem().toString().equals(getResources()
+                    .getString(R.string.stringNotSelected))){
                 orderView.setVisibility(View.INVISIBLE);
 
             }
@@ -583,31 +590,19 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         }
     }
 
-    //  else if(adapterView == spDough){
-
-    // }
-
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public void onNothingSelected(AdapterView<?> adapterView) {                                     // Spinner function
     }
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-        if(b == true){
-            boolTop[i] = true;
-        }
-        boolTop[i] = false;
-
+    public void onClick(DialogInterface dialogInterface, int i, boolean b) {                        // Is called when toppings are selected.
     }
 
     @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (compoundButton.isChecked()){
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {                        // is called when the switch is pressed  and calls the topping layout
             toppings();
-            compoundButton.setChecked(false);
     }
-    }
-}
+            }
+
 
