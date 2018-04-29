@@ -24,4 +24,15 @@ public class MyOrder implements Serializable{
     public Pizza[] getOrder(){
         return order;
     }
+    public String[] writeOrder(){
+        String[] toSave = new String[order.length];
+        for(int i = 0; i < order.length; i++){
+            if(order[i] == null){
+                break;
+            }else{
+                 toSave[i] = order[i].getPizzaName() + "(" + order[i].getPizzaSize() + ")";
+            }
+        }
+        return toSave;
+    }
 }
