@@ -71,6 +71,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
         switch (intent.getExtras().getInt("ordertype")) {
             case 1:
                 txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtPizzeria).toString());
+                firstInfo.setText("Table: " + String.valueOf(intent.getExtras().getInt("tableNr")));
                 break;
             case 2:
                 txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtTakeaway).toString());
@@ -83,7 +84,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 secondInfo.setText(intent.getExtras().getString("phone"));
                 break;
         }
-        txtMoney.setText(Double.toString(order.getTotal()));
+        txtMoney.setText(Double.toString(order.getTotal()) + " €");
         if(!(tableSauceString.equals("none"))){
             txtTableSauce.setText("Sauce for the table: " + tableSauceString);
         }

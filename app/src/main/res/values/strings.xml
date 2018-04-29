@@ -61,6 +61,8 @@
 
     <string name="resultConf">Received order successfully.</string>
 
+    <string name="pickerTimeNot">Please pick a later time.\nThis pick up time is not avaiable.</string>
+
     <string-array name="arraySizes">
         <item name ="not">not selected</item>
         <item name="sizeSmall">Small (for kids)</item>

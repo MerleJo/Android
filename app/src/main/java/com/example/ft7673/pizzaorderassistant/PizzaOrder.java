@@ -233,10 +233,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     }
 private AlertDialog selectTable(){
-        numberPicker = new NumberPicker(this);
-        numberPicker.setMinValue(1);
-        numberPicker.setMaxValue(20);// 20 tables in the pizzeria
-
         tableNr = new EditText(this);
         tableNr.setInputType(InputType.TYPE_CLASS_NUMBER);
         tableNr.setRawInputType(Configuration.KEYBOARD_12KEY);
@@ -245,6 +241,7 @@ private AlertDialog selectTable(){
                 .setView(tableNr)
                 .setPositiveButton(R.string.btnOK, this);
         // setICon
+
         diabuiler.create();
         alertTable = diabuiler.show();
         return alertTable;
@@ -287,6 +284,7 @@ private AlertDialog selectTable(){
                     case 1:                                                                         // in Pizzeria
                         myOrder = new MyOrder(porder);
                         intent = new Intent(this, SentOrder.class);
+                        intent.putExtra("tableNr", selectedTable);
                         intent.putExtra("order", myOrder);
                         intent.putExtra("ordertype", orderType);
                         //intent.putExtra("tableNR", tableNR);                                      // noch als Extra implementierbar
@@ -397,11 +395,11 @@ private AlertDialog selectTable(){
         if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
             return false;
-        }else if(porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
-            Toast.makeText(this, R.string.toastNoDough, Toast.LENGTH_LONG).show();
-            return false;
         }else if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))){
             Toast.makeText(this, R.string.toastNoSize, Toast.LENGTH_LONG).show();
+            return false;
+        }else if(porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
+            Toast.makeText(this, R.string.toastNoDough, Toast.LENGTH_LONG).show();
             return false;
         }
         else{
@@ -564,7 +562,17 @@ private AlertDialog selectTable(){
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {
-        txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
+
+        if(minute + 30 >= 60){
+            minute = minute - 30;
+            hourofDay++;
+        }
+        if(hourofDay > calendar.get(Calendar.HOUR_OF_DAY) && minute > calendar.get(Calendar.MINUTE)){
+            txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
+        }else{
+            Toast.makeText(this,R.string.pickerTimeNot, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private AlertDialog selectSize() {
@@ -608,7 +616,8 @@ private AlertDialog selectTable(){
             }
         } else if(dialog == alertTable){
             if(which == DialogInterface.BUTTON_POSITIVE){                               // braucht man das?
-                numberPicker.getValue();
+                selectedTable = Integer.parseInt(tableNr.getText().toString());
+
             }
         } else if (dialog == alertTopping) {
             boolean help = false;
