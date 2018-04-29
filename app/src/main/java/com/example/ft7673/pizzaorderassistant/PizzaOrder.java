@@ -274,10 +274,13 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                         break;
                     default:
-
+                        break;
                 }
-                break;
+
             }
+            else{
+                    break;
+                }
             case R.id.btnPickupOK:
                 intent = new Intent(this, SentOrder.class);
                 intent.putExtra("order", porder);
