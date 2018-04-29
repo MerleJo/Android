@@ -15,7 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class SentOrder extends Activity implements View.OnClickListener, AdapterView.OnItemLongClickListener {
+public class SentOrder extends Activity implements View.OnClickListener,
+        AdapterView.OnItemLongClickListener, DialogInterface.OnClickListener {
 
     Button btnSendOK;
     TextView txtMoney;
@@ -115,10 +116,18 @@ public class SentOrder extends Activity implements View.OnClickListener, Adapter
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder.setTitle(R.string.alertOrderTitle)
                 .setMessage(helpInfo[pos])
-                .setPositiveButton(R.string.btnOK, (DialogInterface.OnClickListener) this);
+                .setPositiveButton(R.string.btnOK, this);
 
         diabuilder.create();
         return diabuilder.show();
+    }
+
+    @Override
+    public void onClick(DialogInterface dialogInterface, int i) {
+        switch (i){
+            case DialogInterface.BUTTON_POSITIVE:
+                break;
+        }
     }
 }
 
