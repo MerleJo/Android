@@ -25,6 +25,8 @@
     <string name="hintTopping">Additional Toppings</string>
     <string name="hintSauce">Sauce</string>
     <string name="hintNotSelected">Not selected yet</string>
+    <string name="hintClickTime">Click here to set the time. </string>
+    <string name="hintClickPacking">Click here to select packing option.</string>
 
     <string name="cbTable">Sauce for the table</string>
 

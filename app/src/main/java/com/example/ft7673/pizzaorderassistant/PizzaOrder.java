@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -31,7 +32,7 @@ import java.util.Calendar;
 public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeListener,
         View.OnClickListener, DialogInterface.OnClickListener,
         AdapterView.OnItemSelectedListener, TimePickerDialog.OnTimeSetListener,
-        DialogInterface.OnMultiChoiceClickListener, CompoundButton.OnCheckedChangeListener {
+        DialogInterface.OnMultiChoiceClickListener, CompoundButton.OnCheckedChangeListener, View.OnLongClickListener {
 
     private View                orderView;
 
@@ -82,9 +83,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Double[]                    toppingPrice;
 
     //private boolean[]                   boolTop;
-    private Calendar                    calendar;
+    private Calendar                    calendar = Calendar.getInstance();
 
-    private EditText                    etPickedTime;
     private EditText                    etPacking;
     private EditText                    etAddress;
     private EditText                    etPhone;
@@ -93,6 +93,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private Pizza[]                     porder;
     Intent intent;
+    MyOrder                             myOrder;
+    TextView                            txtPickedTime;
+    TextView                            txtPackingSelect;
 
 
     @Override
@@ -249,23 +252,24 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 switch (orderType) {
                     case 1:                                                                         // in Pizzeria
-                        MyOrder myOrder = new MyOrder(porder);
+                        myOrder = new MyOrder(porder);
                         intent = new Intent(this, SentOrder.class);
                         intent.putExtra("order", myOrder);
                         intent.putExtra("ordertype", orderType);
                         //intent.putExtra("tableNR", tableNR);                                      // noch als Extra implementierbar
                         if (intent.resolveActivity(getPackageManager()) != null) {
-                            startActivity(intent);
+                            startActivityForResult(intent, R.string.resultConf);
                         }
                         break;
                     case 2:
                         setContentView(R.layout.takeaway_info);
-                        etPickedTime = findViewById(R.id.etPickedTime);
-                        etPacking = findViewById(R.id.etPacking);
+                        txtPackingSelect = findViewById(R.id.txtPackingSelect);
+                        txtPickedTime = findViewById(R.id.txtPickedTime);
                         btnPickupOK = findViewById(R.id.btnPickupOK);
-                        btnPickupOK.setOnClickListener(this);
 
-                                                                                                    // Packing Options  Auswahl noch hinzufügen
+                        txtPackingSelect.setOnLongClickListener(this);
+                        txtPickedTime.setOnLongClickListener(this);
+                        btnPickupOK.setOnClickListener(this);                                       // Packing Options  Auswahl noch hinzufügen
                         break;
                     case 3:
                         setContentView(R.layout.delivery_info);
@@ -273,8 +277,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         etPhone = findViewById(R.id.eTPhone);
                         btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
                         btnDeliveryOK.setOnClickListener(this);
-                        getDeliveryInfo();
-
                         break;
                     default:
                         break;
@@ -286,32 +288,30 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 }
                 break;
             case R.id.btnPickupOK:
+                MyOrder myOrder = new MyOrder(porder);
                 intent = new Intent(this, SentOrder.class);
-                intent.putExtra("order", porder);
+                intent.putExtra("order", myOrder);
                 intent.putExtra("ordertype", orderType);
-                intent.putExtra("packing", etPacking.getText().toString());
-                intent.putExtra("time", etPickedTime.getText().toString());
+                intent.putExtra("packing", "Packing: " + etPacking.getText().toString());
+                intent.putExtra("time", "Pickup Time: " + txtPickedTime.getText().toString());
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
+                    startActivityForResult(intent, R.string.resultConf);
                 }
                 break;
             case R.id.btnDeliveryOK:
+                myOrder = new MyOrder(porder);
                 intent = new Intent(this, SentOrder.class);
-                intent.putExtra("order", porder);
+                intent.putExtra("order", myOrder);
                 intent.putExtra("ordertype", orderType);
-                intent.putExtra("address", etAddress.getText().toString());
-                intent.putExtra("phone", etPhone.getText().toString());
+                intent.putExtra("address", "Delivery Address: " + etAddress.getText().toString());
+                intent.putExtra("phone", "Phonenumber: " + etPhone.getText().toString());
                 if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
+                    startActivityForResult(intent, R.string.resultConf);
                 }
                 break;
         }
     }
 
-    private void getDeliveryInfo() {
-        delivaddress    = etAddress.getText().toString();
-        delivphone      = etPhone.getText().toString();
-    }
     private boolean checkPizzaInfo(){
         if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
             Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
@@ -478,12 +478,13 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         picker = new TimePickerDialog(this, this, hour, minute, true);
         picker.setTitle(R.string.alertPickupTimeTitle);
         //.setIcon noch einfügen
+       // picker.create();
         picker.show();
     }
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {
-        etPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
+        txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
     }
 
     private AlertDialog selectSize() {
@@ -590,6 +591,14 @@ public void resetTop(){                                                         
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == R.string.resultConf){
+            onCreate(null);
+            Toast.makeText(this, R.string.resultConf, Toast.LENGTH_LONG).show();
+        }
+       // super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {                                     // Spinner function
@@ -603,6 +612,20 @@ public void resetTop(){                                                         
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {                        // is called when the switch is pressed  and calls the topping layout
             toppings();
     }
-            }
+
+    @Override
+    public boolean onLongClick(View v) {                                                            // Long Click Time Picker
+        switch (v.getId()){
+            case R.id.txtPickedTime:
+                setPickupTime();
+                return true;
+            case R.id.txtPackingSelect:
+                // Alert Dialog muss hier noch aufgerufen werden (ist noch nicht geschrieben)
+                return true;
+
+        }
+        return false;
+    }
+}
 
 

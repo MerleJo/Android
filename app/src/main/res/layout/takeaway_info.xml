@@ -18,13 +18,12 @@
             android:layout_weight="1"
             android:text="@string/txtPickTime" />
 
-        <EditText
-            android:id="@+id/etPickedTime"
+        <TextView
+            android:id="@+id/txtPickedTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="time" />
+            android:text="@string/hintClickTime" />
 
     </LinearLayout>
 
@@ -41,13 +40,12 @@
             android:layout_weight="1"
             android:text="@string/txtPacking" />
 
-        <EditText
-            android:id="@+id/etPacking"
+        <TextView
+            android:id="@+id/txtPackingSelect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:text="@string/hintClickPacking" />
 
     </LinearLayout>
 

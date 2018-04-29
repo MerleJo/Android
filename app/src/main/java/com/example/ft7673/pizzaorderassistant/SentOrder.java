@@ -55,7 +55,6 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 intent.putExtra("confirmation", R.string.mesConfirmation);
                 setResult(R.string.resultConf, intent);
                 finish();
-                // welche Dinge noch zurücksetzen?
                 break;
             default:
                 break;
@@ -67,15 +66,15 @@ public class SentOrder extends Activity implements View.OnClickListener,
         MyOrder order = (MyOrder) intent.getSerializableExtra("order");
         switch (intent.getExtras().getInt("ordertype")) {
             case 1:
-                txtOrderType.setText("Option" + R.string.rdbtPizzeria);
+                txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtPizzeria).toString());
                 break;
             case 2:
-                txtOrderType.setText("Option" + R.string.rdbtTakeaway);
+                txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtTakeaway).toString());
                 firstInfo.setText(intent.getExtras().getString("packing"));
                 secondInfo.setText(intent.getExtras().getString("time"));
                 break;
             case 3:
-                txtOrderType.setText("Option" + R.string.rdbtDelivery);
+                txtOrderType.setText("Option: " + getResources().getString(R.string.rdbtDelivery).toString());
                 firstInfo.setText(intent.getExtras().getString("address"));
                 secondInfo.setText(intent.getExtras().getString("phone"));
                 break;
