@@ -55,20 +55,22 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Spinner                     spDough;
     private Spinner                     spSize;
     private Spinner                     spSauce;
+    private Spinner                     spPckOpt;
     private Switch                      topSw;
 
     private ArrayAdapter<String>        adprPizza;
     private ArrayAdapter<String>        adprDough;
     private ArrayAdapter<String>        adprSize;
     private ArrayAdapter<String>        adprSauce;
+    private ArrayAdapter<String>        adprPckOpt;
 
     private int                         orderType = 0;                                              // 1= Pizzeria, 2=Takeaway, 3=Delivery
     private int                         cntPiz = 0;
     private int                         csvFile;
     private Double                      priceHelperPz;
-    AlertDialog                         alertSize;
-    AlertDialog                         alertTopping;
-    AlertDialog                         alertTable;
+    private AlertDialog                 alertSize;
+    private AlertDialog                 alertTopping;
+    private AlertDialog                 alertTable;
 
     private InputStream                 inputStream;
     private String[]                    output;
@@ -86,7 +88,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Double[]                    pizzaPrice;
     private Double[]                    toppingPrice;
 
-    //private boolean[]                   boolTop;
     private Calendar                    calendar = Calendar.getInstance();
 
     private EditText                    etPacking;
@@ -100,7 +101,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     Intent intent;
     MyOrder                             myOrder;
     TextView                            txtPickedTime;
-    TextView                            txtPackingSelect;
     int                                 selectedTable;
     NumberPicker                        numberPicker;
 
@@ -268,6 +268,9 @@ private AlertDialog selectTable(){
 
             case R.id.btnAdd:
                 if (checkPizzaInfo()){
+                    porder[cntPiz].setPizzaPrice(priceHelperPz);
+                    checkSauce();
+                    checkSize();
                     cntPiz++;
                     defineOrder();
                 }
@@ -276,6 +279,8 @@ private AlertDialog selectTable(){
             case R.id.btnCheckout:                                                                   // nur erlauben wenn auch was ausgwählt ist
                 if(checkPizzaInfo()){
                     porder[cntPiz].setPizzaPrice(priceHelperPz);
+                    checkSauce();
+                    checkSize();
 
 
                 switch (orderType) {
@@ -291,13 +296,20 @@ private AlertDialog selectTable(){
                         break;
                     case 2:
                         setContentView(R.layout.takeaway_info);
-                        txtPackingSelect = findViewById(R.id.txtPackingSelect);
-                        txtPickedTime = findViewById(R.id.txtPickedTime);
-                        btnPickupOK = findViewById(R.id.btnPickupOK);
+                        txtPickedTime       = findViewById(R.id.txtPickedTime);
+                        btnPickupOK         = findViewById(R.id.btnPickupOK);
+                        spPckOpt            = findViewById(R.id.spPckOpt);
 
-                        txtPackingSelect.setOnLongClickListener(this);
                         txtPickedTime.setOnLongClickListener(this);
                         btnPickupOK.setOnClickListener(this);                                       // Packing Options  Auswahl noch hinzufügen
+
+                        String[] arrayPckOpt = getResources().getStringArray(R.array.arrayPckOpt);
+                        adprPckOpt   = new ArrayAdapter<String>(this,
+                                android.R.layout.simple_spinner_item, arrayPckOpt);
+                        adprPckOpt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                        spPckOpt.setAdapter(adprPckOpt);
+                        spPckOpt.setOnItemSelectedListener(this);
                         break;
                     case 3:
                         setContentView(R.layout.delivery_info);
@@ -316,14 +328,27 @@ private AlertDialog selectTable(){
                 }
                 break;
             case R.id.btnPickupOK:
-                MyOrder myOrder = new MyOrder(porder);
-                intent = new Intent(this, SentOrder.class);
-                intent.putExtra("order", myOrder);
-                intent.putExtra("ordertype", orderType);
-                intent.putExtra("packing", "Packing: " + txtPackingSelect.getText().toString());
-                intent.putExtra("time", "Pickup Time: " + txtPickedTime.getText().toString());
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivityForResult(intent, R.string.resultConf);
+                if(txtPickedTime.getText().toString().equals(getResources()
+                        .getString(R.string.hintClickTime))){
+                    Toast.makeText(this, R.string.toastSelectTime, Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                else if(spPckOpt.getSelectedItem().toString().equals(getResources()
+                        .getString(R.string.stringNotSelected))){
+                    Toast.makeText(this, R.string.toastSelectPckOpt, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    MyOrder myOrder = new MyOrder(porder);
+                    intent = new Intent(this, SentOrder.class);
+                    intent.putExtra("order", myOrder);
+                    intent.putExtra("ordertype", orderType);
+                    intent.putExtra("packing", "Packing: "
+                            + spPckOpt.getSelectedItem().toString());
+                    intent.putExtra("time", "Pickup Time: "
+                            + txtPickedTime.getText().toString());
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivityForResult(intent, R.string.resultConf);
+                    }
                 }
                 break;
             case R.id.btnDeliveryOK:
@@ -338,6 +363,25 @@ private AlertDialog selectTable(){
                 }
                 break;
         }
+    }
+
+    private void checkSize(){
+        if(spSize.getSelectedItem().toString().equals("Medium")){
+            porder[cntPiz].setPizzaPrice(2.00);
+    }
+    else if(spSize.getSelectedItem().toString().equals("Big")){
+            porder[cntPiz].setPizzaPrice(5.00);
+        }
+        }
+
+    private void checkSauce(){
+        if(cbTable.isChecked()){
+            //Logik einfügen.
+        }
+        else if(!spSauce.getSelectedItem().toString().equals("none")){
+            porder[cntPiz].setPizzaPrice(2.00);
+        }
+
     }
 
     private boolean checkPizzaInfo(){
@@ -581,7 +625,7 @@ private AlertDialog selectTable(){
         }
         }
 
-public void resetTop(){                                                                             // resets the topping list when cancel is hit
+    public void resetTop(){                                                                             // resets the topping list when cancel is hit
         for (int i = 0; i < toppingList.length ; i++){
             selected[i] = false;
         }
