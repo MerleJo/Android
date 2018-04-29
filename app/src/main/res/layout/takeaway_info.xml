@@ -40,12 +40,11 @@
             android:layout_weight="1"
             android:text="@string/txtPacking" />
 
-        <TextView
-            android:id="@+id/txtPackingSelect"
+        <Spinner
+            android:id="@+id/spPckOpt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/hintClickPacking" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 

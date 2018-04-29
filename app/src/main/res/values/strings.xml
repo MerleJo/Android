@@ -37,6 +37,8 @@
     <string name="btnAdd">Add another Pizza</string>
 
     <string name="toastSelectType">Please select an order type first.</string>
+    <string name="toastSelectTime">Please select a time</string>
+    <string name="toastSelectPckOpt">Please select a packing option</string>
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTakeAwayTitle">Please select time and adress</string>
@@ -62,6 +64,13 @@
         <item name="sizeSmall">Small (for kids)</item>
         <item name="sizeMedium">Medium</item>
          <item name="sizeBig">Big</item>
+    </string-array>
+
+    <string-array name="arrayPckOpt">
+        <item name ="none">not selected</item>
+        <item name="carton">paper carton</item>
+        <item name="plastic">in a plastic box</item>
+        <item name="own">Bring your own boxes</item>
     </string-array>
 
     <string-array name="arrayDough">
