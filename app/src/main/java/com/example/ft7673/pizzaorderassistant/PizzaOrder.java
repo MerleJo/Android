@@ -249,8 +249,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
                 switch (orderType) {
                     case 1:                                                                          // in Pizzeria
-                       Pizza[] help =porder;
-                        MyOrder myOrder = new MyOrder(help);
+                        MyOrder myOrder = new MyOrder(porder);
                         intent = new Intent(this, SentOrder.class);
                         intent.putExtra("order", myOrder);
                         intent.putExtra("ordertype", orderType);
