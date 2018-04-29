@@ -238,6 +238,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
             case R.id.btnAdd:
                 if (checkPizzaInfo()){
+                    cntPiz++;
                     defineOrder();
                 }
                 break;

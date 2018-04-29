@@ -49,6 +49,8 @@
     <string name="toastNoDough">Please select a dough first.</string>
     <string name="toastNoSize">Please select a size first.</string>
 
+    <string name="alertOrderTitle">Order Information</string>
+
     <string-array name="arraySizes">
         <item name ="not">not selected</item>
         <item name="sizeSmall">Small (for kids)</item>

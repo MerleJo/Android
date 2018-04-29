@@ -35,4 +35,16 @@ public class MyOrder implements Serializable{
         }
         return toSave;
     }
+    public String[] getMoreOrder(){
+        String[] toSave = new String[order.length];
+        for(int i = 0; i < order.length; i++){
+            if(order[i] == null){
+                break;
+            }else{
+                toSave[i] = order[i].getPizzaDough() + "\n" + order[i].getPizzaToppings() + "\n" +
+                        order[i].getPizzaSauce();
+            }
+        }
+        return toSave;
+    }
 }
