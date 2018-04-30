@@ -2,7 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/btnExit"
+        android:id="@+id/mnuExit"
         android:showAsAction="ifRoom"
-        android:title="@string/btnExit" />
+        android:title="@string/mnuExit" />
+    <item
+        android:id="@+id/mnuCancel"
+        android:title="@string/mnuCancel" />
 </menu>

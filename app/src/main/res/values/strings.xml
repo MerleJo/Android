@@ -31,16 +31,18 @@
     <string name="cbTable">Sauce for the table</string>
 
     <string name="btnOK">OK</string>
-    <string name="btnExit">Exit</string>
     <string name="btnCancel">Cancel</string>
     <string name="btnCheckout">Check Out</string>
     <string name="btnAdd">Add another Pizza</string>
+    <string name="mnuExit">Exit</string>
+    <string name="mnuCancel">Cancel order</string>
 
     <string name="toastSelectType">Please select an order type first.</string>
     <string name="toastSelectTime">Please select a time</string>
     <string name="toastSelectPckOpt">Please select a packing option</string>
     <string name="toastSelectAdress">Please select an adress</string>
     <string name="toastSelectPhNr">Please select a phone number</string>
+    <string name="toastOrderCancel">Order cancelled</string>
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTakeAwayTitle">Please select time and adress</string>
@@ -64,6 +66,7 @@
     <string name="pickerTimeNot">Please pick a later time.\nThis pick up time is not avaiable.</string>
 
     <string name="toastSauceNot">Please select a sauce for the table first.</string>
+    <string name="tooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
 
     <string-array name="arraySizes">
         <item name ="not">not selected</item>

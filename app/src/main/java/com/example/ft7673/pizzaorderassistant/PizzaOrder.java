@@ -141,8 +141,12 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.btnExit:
+            case R.id.mnuExit:
                 finish();
+                break;
+            case R.id.mnuCancel:
+                Toast.makeText(this, R.string.toastOrderCancel, Toast.LENGTH_SHORT).show();
+                onCreate(new Bundle());
                 break;
             default:
                 return super.onMenuItemSelected(featureId, item);
@@ -270,6 +274,10 @@ private AlertDialog selectTable(){
                 break;
 
             case R.id.btnAdd:
+                if(cntPiz == porder.length-1){
+                    Toast.makeText(this, R.string.tooMany, Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (checkPizzaInfo()== true && checkSauce() == true){
                     porder[cntPiz].setPizzaPrice(priceHelperPz);
                     if(cbTable.isChecked()){
