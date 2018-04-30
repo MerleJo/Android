@@ -9,7 +9,6 @@
     <string name="txtSauce">Pick Sauce</string>
     <string name="txtPickTime">Pick up Time:</string>
     <string name="txtPacking">Packing Option:</string>
-
     <string name="txtOrder">Order details</string>
     <string name="txtTotal">Total</string>
 
@@ -18,15 +17,9 @@
     <string name="rdbtDelivery">Delivery</string>
 
     <string name="hintAddress">Delivery Address</string>
-    <string name="hintPhone">Phone Numeber</string>
-    <string name="hintPizza">Pizza</string>
-    <string name="hintDough">Pizza Dough</string>
-    <string name="hintSize">Pizza Size</string>
-    <string name="hintTopping">Additional Toppings</string>
-    <string name="hintSauce">Sauce</string>
+    <string name="hintPhone">Phone Number</string>
     <string name="hintNotSelected">Not selected yet</string>
     <string name="hintClickTime">Click here to set the time. </string>
-    <string name="hintClickPacking">Click here to select packing option.</string>
 
     <string name="cbTable">Sauce for the table</string>
 
@@ -40,34 +33,38 @@
     <string name="toastSelectType">Please select an order type first.</string>
     <string name="toastSelectTime">Please select a time</string>
     <string name="toastSelectPckOpt">Please select a packing option</string>
-    <string name="toastSelectAdress">Please select an adress</string>
+    <string name="toastSelectAdress">Please select an address</string>
     <string name="toastSelectPhNr">Please select a phone number</string>
     <string name="toastOrderCancel">Order cancelled</string>
     <string name="toastSelectTable">Please select a table</string>
-
-    <string name="alertSizeTitle">Select Size</string>
-    <string name="alertTakeAwayTitle">Please select time and adress</string>
-    <string name="alertTopTitle">Please select the extra toppings</string>
-
-    <string name="alertPickupTimeTitle">Select Pickup Time</string>
-
-    <string name="alertTableTitle">Select Table</string>
-
-    <string name="mesConfirmation">Order was successfully received.</string>
-
-    <string name="stringNotSelected">not selected</string>
-    <string name="toastNoName">Please select a pizza first.</string>
     <string name="toastNoDough">Please select a dough first.</string>
     <string name="toastNoSize">Please select a size first.</string>
+    <string name="toastSauceNot">Please select a sauce for the table first.</string>
+    <string name="toastTooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
+    <string name="toastTimeNot">Please pick a later time.\nThis pick up time is not available.</string>
+    <string name="toastNoName">No Name</string>
+    <string name="pickerTimeNot">No Time</string>
+    <string name="tooMany">too many</string>
 
+    <string name="alertSizeTitle">Select Size</string>
+    <string name="alertTopTitle">Select extra toppings</string>
+    <string name="alertPickupTimeTitle">Select Pickup Time</string>
+    <string name="alertTableTitle">Select Table</string>
     <string name="alertOrderTitle">Order Information</string>
 
+    <string name="mesConfirmation">Order was successfully received.</string>
     <string name="resultConf">Received order successfully.</string>
 
-    <string name="pickerTimeNot">Please pick a later time.\nThis pick up time is not avaiable.</string>
+    <string name="stringNotSelected">not selected</string>
+    <string name="stringNone">none</string>
 
-    <string name="toastSauceNot">Please select a sauce for the table first.</string>
-    <string name="tooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
+    <string name="stringPartPacking">Packing: </string>
+
+    <string name="intentMesTable">tableNr</string>
+    <string name="intentMesOrder">order</string>
+    <string name="intentMesOrderType">ordertype</string>
+    <string name="intentMesPacking">packing</string>
+    <string name="intentMesTime">time</string>
 
     <string-array name="arraySizes">
         <item name ="not">not selected</item>

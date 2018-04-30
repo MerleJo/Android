@@ -1,75 +1,47 @@
 package com.example.ft7673.pizzaorderassistant;
 
-
 import java.io.Serializable;
 
 public class Pizza implements Serializable{
 
-    private String name;
-    private String dough;
-    private String size;
-    private String[] toppings;
-    private String sauce;
-    private boolean tableSauce;
-    private double price;
+    private String      name;
+    private String      dough;
+    private String      size;
+    private String      sauce;
+    private String[]    toppings;
+    private boolean     tableSauce;
+    private double      price;
 
     public Pizza(String name){
-        this.name = name;
+        this.name       = name;
         this.dough      = "not selected";
-        this.sauce      = "none";
         this.size       = "not selected";
-        tableSauce = false;
+        this.sauce      = "none";
+        tableSauce      = false;
     }
-    /*public Pizza(String name, String dough, String size, String[] toppings, String sauce, double price){        // checken ob wir es brauchen
-        this.name = name;
-        this.dough = dough;
-        this.size = size;
-        this.toppings = toppings;
-        this.sauce = sauce;
-        this.price = price;
-        this.cntTopping = 0;
-    }
-*/
+
     public String getPizzaName(){
         return this.name;
-    }
-    public void setPizzaName(String name){
-        this.name = name;
     }
     public String getPizzaDough(){
         return this.dough;
     }
-    public void setPizzaDough(String dough){
-        this.dough = dough;
-    }
-    public String getPizzaSize(){
-        return this.size;
-    }
+    public String getPizzaSize(){return this.size;}
+    public String[] getPizzaToppings(){return this.toppings;}
+    public String getPizzaSauce(){return this.sauce;}
+    public double getPizzaPrice(){return this.price;}
+    public boolean getTableSauce(){return this.tableSauce;}
+
+    public void setPizzaDough(String dough){this.dough = dough;}
     public void setPizzaSize(String size){
         this.size = size;
     }
-    public String[] getPizzaToppings(){
-        return this.toppings;
-    }
-    public void setPizzaToppings(String[] toppings){
-        this.toppings = toppings;
-
-    }
-    public String getPizzaSauce(){
-        return this.sauce;
-    }
+    public void setPizzaToppings(String[] toppings){this.toppings = toppings;}
     public void setPizzaSauce(String sauce){
         this.sauce = sauce;
-    }
-    public double getPizzaPrice(){
-        return this.price;
     }
     public void setPizzaPrice(double price){
         this.price = this.price + price;
     }
-    public boolean getTableSauce(){
-        return tableSauce;
-    }public void setTableSauce(boolean tableSauce){
-        this.tableSauce = tableSauce;
-    }
+    public void setTableSauce(boolean tableSauce){ this.tableSauce = tableSauce;}
 }
