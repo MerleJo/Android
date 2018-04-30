@@ -41,13 +41,23 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private RadioGroup                  rdGroup;
     private RadioButton                 rdbtPizzeria;
+
     private Button                      btnOrderOK;
     private Button                      btnPickupOK;
-
     private Button                      btnCheckout;
     private Button                      btnAdd;
     private Button                      btnDeliveryOK;
+
+    private AlertDialog                 alertTopping;
+    private AlertDialog                 alertTable;
+
+    private EditText                    etAddress;
+    private EditText                    etPhone;
+    private EditText                    tableNr;
+
     private CheckBox                    cbTable;
+
+    private TextView                    txtPickedTime;
 
     private Spinner                     spPizza;
     private Spinner                     spDough;
@@ -56,23 +66,22 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Spinner                     spPckOpt;
     private Switch                      topSw;
 
-    private ArrayAdapter<String>        adprPizza;
-    private ArrayAdapter<String>        adprDough;
-    private ArrayAdapter<String>        adprSize;
-    private ArrayAdapter<String>        adprSauce;
-    private ArrayAdapter<String>        adprPckOpt;
-
-    private int                         orderType;                                                  // 1= Pizzeria, 2=Takeaway, 3=Delivery
-    private int                         cntPiz;
-    private int                         csvFile;
-    private Double                      priceHelperPz;
-    private AlertDialog                 alertTopping;
-    private AlertDialog                 alertTable;
-
     private InputStream                 inputStream;
     private String[]                    output;
     private String                      lineReader;
     private BufferedReader              reader;
+
+    private ArrayAdapter<String>        adpr;
+
+    private int                         orderType;                                              // 1= Pizzeria, 2=Takeaway, 3=Delivery
+    private int                         cntPiz;
+    private int                         csvFile;
+    private int                         selectedTable;
+
+    private double                      grpSaucPrice;
+    private double                      priceHelperPz;
+    private Double[]                    pizzaPrice;
+    private Double[]                    toppingPrice;
 
     private String[]                    pizzaList;
     private String[]                    sauceList;
@@ -80,24 +89,17 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private String[]                    pzSizeList;
     private String[]                    doughList;
 
-    private Double[]                    pizzaPrice;
-    private Double[]                    toppingPrice;
+    private boolean                     checkedChange;
+    private boolean[]                   selected;
 
     private Calendar                    calendar = Calendar.getInstance();
 
-    private EditText                    etAddress;
-    private EditText                    etPhone;
-    private EditText                    tableNr;
-
-    private boolean[]                   selected;
-
     private Pizza[]                     porder;
-    Intent intent;
-    MyOrder                             myOrder;
-    TextView                            txtPickedTime;
-    int                                 selectedTable;
-    Double                              grpSaucPrice;
-    boolean                             checkedChange;
+
+    private Intent                      intent;
+
+    private MyOrder                     myOrder;
+
 
 
     @Override
@@ -108,16 +110,14 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
         rdGroup         =  findViewById(R.id.rdGroup);
         rdbtPizzeria    =  findViewById(R.id.rdbtPizzeria);
-
-
         btnOrderOK      =  findViewById(R.id.btnOrderTypeOK);
-        btnOrderOK.setOnClickListener(this);
 
+        btnOrderOK.setOnClickListener(this);
         rdGroup.setOnCheckedChangeListener(this);
-        csvFile         = 0;
+
         orderType       = 0;
         cntPiz          = 0;
-
+        csvFile         = 0;
         priceHelperPz   = 0.00;
         grpSaucPrice    = 0.00;
 
@@ -169,13 +169,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         setContentView(R.layout.activity_main);
 
         orderView   = findViewById(R.id.orderView);
-
         spPizza     = findViewById(R.id.spPizza);
         spDough     = findViewById(R.id.spDough);
         spSize      = findViewById(R.id.spSize);
         spSauce     = findViewById(R.id.spSauce);
         topSw       = findViewById(R.id.topSw);
-
         btnAdd      = findViewById(R.id.btnAdd);
         btnCheckout = findViewById(R.id.btnCheckout);
         cbTable     = findViewById(R.id.cbTable);
@@ -191,66 +189,47 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         } else {
             cbTable.setVisibility(View.GONE);
         }
-
-
         for (int i = 0; i < 3; i++) {
             getCsvSize();
             readFile();
         }
         selected    = new boolean[pizzaList.length];
-        adprPizza   = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, pizzaList);
-        adprPizza.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adpr = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, pizzaList);
+        adpr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spPizza.setAdapter(adprPizza);
+        spPizza.setAdapter(adpr);
         spPizza.setOnItemSelectedListener(this);
 
 
-        adprSauce   = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, sauceList);
-        adprSauce.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adpr = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, sauceList);
+        adpr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spSauce.setAdapter(adprSauce);
+        spSauce.setAdapter(adpr);
         spSauce.setOnItemSelectedListener(this);
 
 
         pzSizeList  = getResources().getStringArray(R.array.arraySizes);
-        adprSize    = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, pzSizeList);
-        adprSize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adpr    = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, pzSizeList);
+        adpr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spSize.setAdapter(adprSize);
+        spSize.setAdapter(adpr);
         spSize.setOnItemSelectedListener(this);
 
+
         doughList   = getResources().getStringArray(R.array.arrayDough);
+        adpr   = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, doughList);
+        adpr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        adprDough   = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, doughList);
-        adprDough.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spDough.setAdapter(adprDough);
+        spDough.setAdapter(adpr);
         spDough.setOnItemSelectedListener(this);
 
         topSw.setOnCheckedChangeListener(this);
-
-
     }
-private AlertDialog selectTable(){
-        tableNr = new EditText(this);
-        tableNr.setInputType(InputType.TYPE_CLASS_NUMBER);
-        tableNr.setRawInputType(Configuration.KEYBOARD_12KEY);
-        AlertDialog.Builder diabuiler = new AlertDialog.Builder(this);
-        diabuiler.setTitle(R.string.alertTableTitle)
-                .setView(tableNr)
-                .setPositiveButton(R.string.btnOK, this)
-                .setIcon(R.drawable.table_nr);
 
-        diabuiler.create();
-        alertTable = diabuiler.show();
-        return alertTable;
-
-
-}
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -282,7 +261,7 @@ private AlertDialog selectTable(){
                 }
                 break;
 
-            case R.id.btnCheckout:                                                                   // nur erlauben wenn auch was ausgwählt ist
+            case R.id.btnCheckout:
                 if(checkPizzaInfo() == true && checkSauce() == true){
                     if(cbTable.isChecked()){
                         porder[cntPiz].setTableSauce(true);
@@ -290,48 +269,46 @@ private AlertDialog selectTable(){
                     porder[cntPiz].setPizzaPrice(priceHelperPz);
                     checkSize();
 
+                    switch (orderType) {
+                        case 1:                                                                         // in Pizzeria
+                            myOrder = new MyOrder(porder, grpSaucPrice);
+                            intent = new Intent(this, SentOrder.class);
+                            intent.putExtra(getResources().getString(R.string.intentMesTable), selectedTable);
+                            intent.putExtra(getResources().getString(R.string.intentMesOrder), myOrder);
+                            intent.putExtra(getResources().getString(R.string.intentMesOrderType), orderType);
+                            if (intent.resolveActivity(getPackageManager()) != null) {
+                                startActivityForResult(intent, R.string.resultConf);
+                            }
+                            break;
+                        case 2:
+                            setContentView(R.layout.takeaway_info);
+                            txtPickedTime       = findViewById(R.id.txtPickedTime);
+                            btnPickupOK         = findViewById(R.id.btnPickupOK);
+                            spPckOpt            = findViewById(R.id.spPckOpt);
 
-                switch (orderType) {
-                    case 1:                                                                         // in Pizzeria
-                        myOrder = new MyOrder(porder, grpSaucPrice);
-                        intent = new Intent(this, SentOrder.class);
-                        intent.putExtra("tableNr", selectedTable);
-                        intent.putExtra("order", myOrder);
-                        intent.putExtra("ordertype", orderType);
-                        if (intent.resolveActivity(getPackageManager()) != null) {
-                            startActivityForResult(intent, R.string.resultConf);
-                        }
-                        break;
-                    case 2:
-                        setContentView(R.layout.takeaway_info);
-                        txtPickedTime       = findViewById(R.id.txtPickedTime);
-                        btnPickupOK         = findViewById(R.id.btnPickupOK);
-                        spPckOpt            = findViewById(R.id.spPckOpt);
+                            txtPickedTime.setOnLongClickListener(this);
+                            btnPickupOK.setOnClickListener(this);
 
-                        txtPickedTime.setOnLongClickListener(this);
-                        btnPickupOK.setOnClickListener(this);                                       // Packing Options  Auswahl noch hinzufügen
+                            String[] arrayPckOpt = getResources().getStringArray(R.array.arrayPckOpt);
+                            adpr   = new ArrayAdapter<String>(this,
+                                    android.R.layout.simple_spinner_item, arrayPckOpt);
+                            adpr.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-                        String[] arrayPckOpt = getResources().getStringArray(R.array.arrayPckOpt);
-                        adprPckOpt   = new ArrayAdapter<String>(this,
-                                android.R.layout.simple_spinner_item, arrayPckOpt);
-                        adprPckOpt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-                        spPckOpt.setAdapter(adprPckOpt);
-                        spPckOpt.setOnItemSelectedListener(this);
-                        break;
-                    case 3:
-                        setContentView(R.layout.delivery_info);
-                        etAddress = findViewById(R.id.etAddress);
-                        etPhone = findViewById(R.id.eTPhone);
-                        btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
-                        btnDeliveryOK.setOnClickListener(this);
-                        break;
-                    default:
-                        break;
+                            spPckOpt.setAdapter(adpr);
+                            spPckOpt.setOnItemSelectedListener(this);
+                            break;
+                        case 3:
+                            setContentView(R.layout.delivery_info);
+                            etAddress = findViewById(R.id.etAddress);
+                            etPhone = findViewById(R.id.eTPhone);
+                            btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
+                            btnDeliveryOK.setOnClickListener(this);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-
-            }
-            else{
+                else{
                     break;
                 }
                 break;
@@ -385,11 +362,11 @@ private AlertDialog selectTable(){
     private void checkSize(){
         if(spSize.getSelectedItem().toString().equals("Medium")){
             porder[cntPiz].setPizzaPrice(2.00);
-    }
-    else if(spSize.getSelectedItem().toString().equals("Big")){
+        }
+        else if(spSize.getSelectedItem().toString().equals("Big")){
             porder[cntPiz].setPizzaPrice(5.00);
         }
-        }
+    }
 
     private boolean checkSauce(){
         if(cbTable.isChecked()){
@@ -601,13 +578,27 @@ private AlertDialog selectTable(){
         }
 
     }
+    private AlertDialog selectTable(){
+        tableNr = new EditText(this);
+        tableNr.setInputType(InputType.TYPE_CLASS_NUMBER);
+        tableNr.setRawInputType(Configuration.KEYBOARD_12KEY);
 
+        AlertDialog.Builder diabuiler = new AlertDialog.Builder(this);
+        diabuiler   .setTitle(R.string.alertTableTitle)
+                .setView(tableNr)
+                .setPositiveButton(R.string.btnOK, this)
+                .setIcon(R.drawable.table_nr);
+
+        diabuiler.create();
+        alertTable = diabuiler.show();
+        return alertTable;
+    }
 
 
     private AlertDialog toppings() {
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder.setTitle(R.string.alertTopTitle)
-                  .setIcon(R.drawable.toppings);
+                .setIcon(R.drawable.toppings);
 
         diabuilder.setPositiveButton(R.string.btnOK, this);
         diabuilder.setNegativeButton(R.string.btnCancel, this);
@@ -654,20 +645,20 @@ private AlertDialog selectTable(){
 
                     }
                     break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        resetTop();
-                        topSw.setChecked(false);
-                        checkedChange = false;
-                        break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    resetTop();
+                    topSw.setChecked(false);
+                    checkedChange = false;
+                    break;
             }
         }
-        }
+    }
 
     public void resetTop(){                                                                             // resets the topping list when cancel is hit
         for (int i = 0; i < toppingList.length ; i++){
             selected[i] = false;
         }
-}
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {              // handles the spinners
@@ -686,10 +677,10 @@ private AlertDialog selectTable(){
                 orderView.setVisibility(View.VISIBLE);
 
             }
-           //porder[cntPiz].setPizzaPrice(Double.parseDouble(pizzaList[i+1]));
+            //porder[cntPiz].setPizzaPrice(Double.parseDouble(pizzaList[i+1]));
         }
         if(adapterView == spDough){
-        porder[cntPiz].setPizzaDough(doughList[i]);
+            porder[cntPiz].setPizzaDough(doughList[i]);
         }
         if(adapterView == spSauce){
 
@@ -739,5 +730,3 @@ private AlertDialog selectTable(){
         return false;
     }
 }
-
-
