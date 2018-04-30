@@ -585,7 +585,7 @@ private AlertDialog selectTable(){
         int helpHour    = calendar.get(Calendar.HOUR_OF_DAY);
 
         if(helpMin >= 60){
-            helpMin -= 30;
+            helpMin -= 60;
             helpHour ++;
             if(helpHour >= 24){
                 helpHour-=24;

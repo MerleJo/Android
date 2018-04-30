@@ -74,7 +74,7 @@ public class MyOrder implements Serializable{
                 toSave[i] = "Dough: " + order[i].getPizzaDough() + "\n" +
                             "Toppings: " + saveTop + "\n" +
                             "Sauce: " + order[i].getPizzaSauce() + "\n" +
-                            "Price: " + order[i].getPizzaPrice();
+                            "Price: " + order[i].getPizzaPrice() + " €";
             }
         }
         return toSave;
