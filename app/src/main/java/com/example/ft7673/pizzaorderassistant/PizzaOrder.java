@@ -103,6 +103,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     TextView                            txtPickedTime;
     int                                 selectedTable;
     NumberPicker                        numberPicker;
+    Double                              grpSaucPrice;
 
 
     @Override
@@ -123,6 +124,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         csvFile         = 0;
 
         priceHelperPz   = 0.00;
+
+        grpSaucPrice    = 0.00;
 
         porder          = new Pizza[25];
 
@@ -383,7 +386,8 @@ private AlertDialog selectTable(){
 
     private void checkSauce(){
         if(cbTable.isChecked()){
-            //Logik einfügen.
+            grpSaucPrice += 8.00;
+            //porder[cntPiz].setPizzaPrice(8.00);
         }
         else if(!spSauce.getSelectedItem().toString().equals("none")){
             porder[cntPiz].setPizzaPrice(2.00);
