@@ -127,8 +127,8 @@ public class SentOrder extends Activity implements View.OnClickListener,
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder  .setTitle(R.string.alertOrderTitle)
                     .setMessage(helpInfo[pos])
-                    .setPositiveButton(R.string.btnOK, this);
-        //setIcon
+                    .setPositiveButton(R.string.btnOK, this)
+                    .setIcon(R.drawable.cart);
         diabuilder.create();
         return diabuilder.show();
     }
