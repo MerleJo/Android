@@ -7,10 +7,26 @@ public class MyOrder implements Serializable{
     private double total = 0.00;
     private Pizza[] order;
     private String tableSauceList;
+    private double tableSaucePrice;
 
+    public MyOrder(Pizza[] order, double tableSaucePrice){
+        this.order = order;
+        this.tableSauceList = "none";
+        this.tableSaucePrice = tableSaucePrice;
+        this.total = tableSaucePrice;
+        for(int i = 0; i < order.length; i++){
+            if(order[i] == null){
+                break;
+            }
+            else {
+                this.total = this.total + order[i].getPizzaPrice();
+            }
+        }
+    }
     public MyOrder(Pizza[] order){
         this.order = order;
         this.tableSauceList = "none";
+        this.tableSaucePrice = 0.0;
         for(int i = 0; i < order.length; i++){
             if(order[i] == null){
                 break;
@@ -25,6 +41,9 @@ public class MyOrder implements Serializable{
     }
     public Pizza[] getOrder(){
         return order;
+    }
+    public double getTableSaucePrice(){
+        return tableSaucePrice;
     }
     public String[] writeOrder(){
         String[] toSave = new String[order.length];
@@ -54,7 +73,8 @@ public class MyOrder implements Serializable{
                 }
                 toSave[i] = "Dough: " + order[i].getPizzaDough() + "\n" +
                             "Toppings: " + saveTop + "\n" +
-                            "Sauce: " + order[i].getPizzaSauce();
+                            "Sauce: " + order[i].getPizzaSauce() + "\n" +
+                            "Price: " + order[i].getPizzaPrice();
             }
         }
         return toSave;

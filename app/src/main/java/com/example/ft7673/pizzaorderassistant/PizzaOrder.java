@@ -267,9 +267,11 @@ private AlertDialog selectTable(){
                 break;
 
             case R.id.btnAdd:
-                if (checkPizzaInfo()){
+                if (checkPizzaInfo()== true && checkSauce() == true){
                     porder[cntPiz].setPizzaPrice(priceHelperPz);
-                    checkSauce();
+                    if(cbTable.isChecked()){
+                        porder[cntPiz].setTableSauce(true);
+                    }
                     checkSize();
                     cntPiz++;
                     defineOrder();
@@ -277,20 +279,21 @@ private AlertDialog selectTable(){
                 break;
 
             case R.id.btnCheckout:                                                                   // nur erlauben wenn auch was ausgwählt ist
-                if(checkPizzaInfo()){
+                if(checkPizzaInfo() == true && checkSauce() == true){
+                    if(cbTable.isChecked()){
+                        porder[cntPiz].setTableSauce(true);
+                    }
                     porder[cntPiz].setPizzaPrice(priceHelperPz);
-                    checkSauce();
                     checkSize();
 
 
                 switch (orderType) {
                     case 1:                                                                         // in Pizzeria
-                        myOrder = new MyOrder(porder);
+                        myOrder = new MyOrder(porder, grpSaucPrice);
                         intent = new Intent(this, SentOrder.class);
                         intent.putExtra("tableNr", selectedTable);
                         intent.putExtra("order", myOrder);
                         intent.putExtra("ordertype", orderType);
-                        //intent.putExtra("tableNR", tableNR);                                      // noch als Extra implementierbar
                         if (intent.resolveActivity(getPackageManager()) != null) {
                             startActivityForResult(intent, R.string.resultConf);
                         }
@@ -384,15 +387,23 @@ private AlertDialog selectTable(){
         }
         }
 
-    private void checkSauce(){
+    private boolean checkSauce(){
         if(cbTable.isChecked()){
-            grpSaucPrice += 8.00;
-            //porder[cntPiz].setPizzaPrice(8.00);
+            if(spSauce.getSelectedItem().toString().equals("none")){
+                Toast.makeText(this, R.string.toastSauceNot, Toast.LENGTH_LONG).show();
+                return false;
+            }else{
+                grpSaucPrice += 6.00;
+                return true;
+            }
         }
         else if(!spSauce.getSelectedItem().toString().equals("none")){
             porder[cntPiz].setPizzaPrice(2.00);
+            return true;
         }
-
+        else{
+            return true;
+        }
     }
 
     private boolean checkPizzaInfo(){
@@ -676,9 +687,7 @@ private AlertDialog selectTable(){
         porder[cntPiz].setPizzaDough(doughList[i]);
         }
         if(adapterView == spSauce){
-            if(cbTable.isChecked()){
-                porder[cntPiz].setTableSauce(true);
-            }
+
             porder[cntPiz].setPizzaSauce(sauceList[i]);
 
 

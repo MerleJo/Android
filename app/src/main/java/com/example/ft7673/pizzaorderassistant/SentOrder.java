@@ -86,7 +86,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
         }
         txtMoney.setText(Double.toString(order.getTotal()) + " €");
         if(!(tableSauceString.equals("none"))){
-            txtTableSauce.setText("Sauce for the table: " + tableSauceString);
+            txtTableSauce.setText("Sauce for the table: " + tableSauceString + "(" +order.getTableSaucePrice() + ")");
         }
         final ArrayList<String> listing = new ArrayList<String>();
 
