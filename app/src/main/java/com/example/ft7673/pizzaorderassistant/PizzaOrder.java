@@ -104,6 +104,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     int                                 selectedTable;
     NumberPicker                        numberPicker;
     Double                              grpSaucPrice;
+    boolean                             checkedChange;
 
 
     @Override
@@ -185,6 +186,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         btnAdd.setOnClickListener(this);
         btnCheckout.setOnClickListener(this);
 
+        checkedChange = false;
+
         if (orderType == 1) {
             cbTable.setVisibility(View.VISIBLE);
             cbTable.setOnClickListener(this);
@@ -242,8 +245,8 @@ private AlertDialog selectTable(){
         AlertDialog.Builder diabuiler = new AlertDialog.Builder(this);
         diabuiler.setTitle(R.string.alertTableTitle)
                 .setView(tableNr)
-                .setPositiveButton(R.string.btnOK, this);
-        // setICon
+                .setPositiveButton(R.string.btnOK, this)
+                .setIcon(R.drawable.table_nr);
 
         diabuiler.create();
         alertTable = diabuiler.show();
@@ -590,25 +593,12 @@ private AlertDialog selectTable(){
 
     }
 
-    private AlertDialog selectSize() {
-        AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
-        diabuilder.setTitle(R.string.alertSizeTitle)
-                // .setIcon()        noch einfügen
-
-                .setSingleChoiceItems(R.array.arraySizes, -1, this);
-
-
-        alertSize = diabuilder.create();
-        alertSize.show();
-
-        return alertSize;
-    }
 
 
     private AlertDialog toppings() {
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
-        diabuilder.setTitle(R.string.alertTopTitle);
-        // .setIcon()        noch einfügen
+        diabuilder.setTitle(R.string.alertTopTitle)
+                  .setIcon(R.drawable.toppings);
 
         diabuilder.setPositiveButton(R.string.btnOK, this);
         diabuilder.setNegativeButton(R.string.btnCancel, this);
@@ -635,6 +625,7 @@ private AlertDialog selectTable(){
 
             }
         } else if (dialog == alertTopping) {
+            checkedChange = true;
             boolean help = false;
             switch (which) {
                 case DialogInterface.BUTTON_POSITIVE:
@@ -647,12 +638,17 @@ private AlertDialog selectTable(){
                     }
                     if (help) {
                         topSw.setChecked(true);
+                        checkedChange = false;
+
                     } else {
                         topSw.setChecked(false);
+
                     }
                     break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         resetTop();
+                        topSw.setChecked(false);
+                        checkedChange = false;
                         break;
             }
         }
@@ -716,7 +712,12 @@ private AlertDialog selectTable(){
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {                        // is called when the switch is pressed  and calls the topping layout
+        if(checkedChange == false) {
             toppings();
+        } else{
+            checkedChange = false;
+        }
+
     }
 
     @Override
