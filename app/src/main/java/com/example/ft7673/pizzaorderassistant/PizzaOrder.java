@@ -588,12 +588,20 @@ private AlertDialog selectTable(){
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {
+        int helpMin     =  calendar.get(Calendar.MINUTE) + 30;
+        int helpHour    = calendar.get(Calendar.HOUR_OF_DAY);
 
-        if(minute + 30 >= 60){
-            minute = minute - 30;
-            hourofDay++;
+        if(helpMin >= 60){
+            helpMin -= 30;
+            helpHour ++;
+            if(helpHour >= 24){
+                helpHour-=24;
+            }
         }
-        if(hourofDay > calendar.get(Calendar.HOUR_OF_DAY) && minute > calendar.get(Calendar.MINUTE)){
+
+        if(  hourofDay > helpHour
+                || (hourofDay == helpHour
+                && minute > helpMin)){
             txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
         }else{
             Toast.makeText(this,R.string.pickerTimeNot, Toast.LENGTH_LONG).show();
@@ -629,7 +637,13 @@ private AlertDialog selectTable(){
             }
         } else if(dialog == alertTable){
             if(which == DialogInterface.BUTTON_POSITIVE){                               // braucht man das?
-                selectedTable = Integer.parseInt(tableNr.getText().toString());
+                if (tableNr.getText().toString().equals("")){
+                    Toast.makeText(this, R.string.toastSelectTable,
+                            Toast.LENGTH_SHORT).show();
+                    selectTable();
+                } else {
+                    selectedTable = Integer.parseInt(tableNr.getText().toString());
+                }
 
             }
         } else if (dialog == alertTopping) {
@@ -707,7 +721,6 @@ private AlertDialog selectTable(){
             onCreate(null);
             Toast.makeText(this, R.string.resultConf, Toast.LENGTH_LONG).show();
         }
-       // super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
