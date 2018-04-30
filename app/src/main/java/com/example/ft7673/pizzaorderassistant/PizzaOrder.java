@@ -443,7 +443,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     intent.putExtra(getResources().getString(R.string.intentMesAddress),
                             getResources().getString(R.string.stringPartDelivery)+
                                     " " + etAddress.getText().toString());
-                    intent.putExtra(getResources().getString(R.string.intentMesAddress),
+                    intent.putExtra(getResources().getString(R.string.intentMesPhone),
                             getResources().getString(R.string.stringPartPhone)+
                                     " " + etPhone.getText().toString());
                     if (intent.resolveActivity(getPackageManager()) != null) {

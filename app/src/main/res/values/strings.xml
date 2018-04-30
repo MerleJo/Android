@@ -59,6 +59,9 @@
     <string name="stringPartTime">Pickup Time:</string>
     <string name="stringPartDelivery">Delivery Address:</string>
     <string name="stringPartPhone">Phone Number:</string>
+    <string name="stringPartOption">Option:</string>
+    <string name="stringPartTable">Table:</string>
+    <string name="stringPartSauce">Sauce for the table:</string>
 
     <string name="stringMedium">Medium</string>
     <string name="stringBig">Big</string>
