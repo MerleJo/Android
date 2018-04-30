@@ -41,8 +41,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private RadioGroup                  rdGroup;
     private RadioButton                 rdbtPizzeria;
-    private RadioButton                 rdbtTakeaway;
-    private RadioButton                 rdbtDelivery;
     private Button                      btnOrderOK;
     private Button                      btnPickupOK;
 
@@ -64,19 +62,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private ArrayAdapter<String>        adprSauce;
     private ArrayAdapter<String>        adprPckOpt;
 
-    private int                         orderType = 0;                                              // 1= Pizzeria, 2=Takeaway, 3=Delivery
-    private int                         cntPiz = 0;
+    private int                         orderType;                                                  // 1= Pizzeria, 2=Takeaway, 3=Delivery
+    private int                         cntPiz;
     private int                         csvFile;
     private Double                      priceHelperPz;
-    private AlertDialog                 alertSize;
     private AlertDialog                 alertTopping;
     private AlertDialog                 alertTable;
 
     private InputStream                 inputStream;
     private String[]                    output;
     private String                      lineReader;
-    private String                      delivaddress;
-    private String                      delivphone;
     private BufferedReader              reader;
 
     private String[]                    pizzaList;
@@ -90,7 +85,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private Calendar                    calendar = Calendar.getInstance();
 
-    private EditText                    etPacking;
     private EditText                    etAddress;
     private EditText                    etPhone;
     private EditText                    tableNr;
@@ -102,7 +96,6 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     MyOrder                             myOrder;
     TextView                            txtPickedTime;
     int                                 selectedTable;
-    NumberPicker                        numberPicker;
     Double                              grpSaucPrice;
     boolean                             checkedChange;
 
@@ -115,17 +108,17 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
         rdGroup         =  findViewById(R.id.rdGroup);
         rdbtPizzeria    =  findViewById(R.id.rdbtPizzeria);
-        rdbtTakeaway    =  findViewById(R.id.rdbtTakeaway);
-        rdbtDelivery    =  findViewById(R.id.rdbtDelivery);
+
 
         btnOrderOK      =  findViewById(R.id.btnOrderTypeOK);
         btnOrderOK.setOnClickListener(this);
 
         rdGroup.setOnCheckedChangeListener(this);
         csvFile         = 0;
+        orderType       = 0;
+        cntPiz          = 0;
 
         priceHelperPz   = 0.00;
-
         grpSaucPrice    = 0.00;
 
         porder          = new Pizza[25];
@@ -629,13 +622,7 @@ private AlertDialog selectTable(){
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if (dialog == alertSize) {
-
-
-            switch (which) {
-
-            }
-        } else if(dialog == alertTable){
+        if(dialog == alertTable){
             if(which == DialogInterface.BUTTON_POSITIVE){                               // braucht man das?
                 if (tableNr.getText().toString().equals("")){
                     Toast.makeText(this, R.string.toastSelectTable,
