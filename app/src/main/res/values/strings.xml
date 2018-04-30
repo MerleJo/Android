@@ -42,9 +42,6 @@
     <string name="toastSauceNot">Please select a sauce for the table first.</string>
     <string name="toastTooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
     <string name="toastTimeNot">Please pick a later time.\nThis pick up time is not available.</string>
-    <string name="toastNoName">No Name</string>
-    <string name="pickerTimeNot">No Time</string>
-    <string name="tooMany">too many</string>
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTopTitle">Select extra toppings</string>
@@ -58,13 +55,21 @@
     <string name="stringNotSelected">not selected</string>
     <string name="stringNone">none</string>
 
-    <string name="stringPartPacking">Packing: </string>
+    <string name="stringPartPacking">Packing:</string>
+    <string name="stringPartTime">Pickup Time:</string>
+    <string name="stringPartDelivery">Delivery Address:</string>
+    <string name="stringPartPhone">Phone Number:</string>
+
+    <string name="stringMedium">Medium</string>
+    <string name="stringBig">Big</string>
 
     <string name="intentMesTable">tableNr</string>
     <string name="intentMesOrder">order</string>
     <string name="intentMesOrderType">ordertype</string>
     <string name="intentMesPacking">packing</string>
     <string name="intentMesTime">time</string>
+    <string name="intentMesAddress">address</string>
+    <string name="intentMesPhone">phone</string>
 
     <string-array name="arraySizes">
         <item name ="not">not selected</item>

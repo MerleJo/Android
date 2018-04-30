@@ -247,7 +247,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
             case R.id.btnAdd:
                 if(cntPiz == porder.length-1){
-                    Toast.makeText(this, R.string.tooMany, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toastTooMany, Toast.LENGTH_SHORT).show();
                     break;
                 }
                 if (checkPizzaInfo()== true && checkSauce() == true){
@@ -325,11 +325,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 else {
                     MyOrder myOrder = new MyOrder(porder);
                     intent = new Intent(this, SentOrder.class);
-                    intent.putExtra("order", myOrder);
-                    intent.putExtra("ordertype", orderType);
-                    intent.putExtra("packing", "Packing: "
+                    intent.putExtra(getResources().getString(R.string.intentMesOrder), myOrder);
+                    intent.putExtra(getResources().getString(R.string.intentMesOrderType), orderType);
+                    intent.putExtra(getResources().getString(R.string.intentMesPacking), getResources().getString(R.string.stringPartPacking) + " "
                             + spPckOpt.getSelectedItem().toString());
-                    intent.putExtra("time", "Pickup Time: "
+                    intent.putExtra(getResources().getString(R.string.intentMesTime), getResources().getString(R.string.stringPartTime) + " "
                             + txtPickedTime.getText().toString());
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(intent, R.string.resultConf);
@@ -347,10 +347,10 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 else {
                     myOrder = new MyOrder(porder);
                     intent = new Intent(this, SentOrder.class);
-                    intent.putExtra("order", myOrder);
-                    intent.putExtra("ordertype", orderType);
-                    intent.putExtra("address", "Delivery Address: " + etAddress.getText().toString());
-                    intent.putExtra("phone", "Phonenumber: " + etPhone.getText().toString());
+                    intent.putExtra(getResources().getString(R.string.intentMesOrder), myOrder);
+                    intent.putExtra(getResources().getString(R.string.intentMesOrderType), orderType);
+                    intent.putExtra(getResources().getString(R.string.intentMesAddress), getResources().getString(R.string.stringPartDelivery)+ " " + etAddress.getText().toString());
+                    intent.putExtra(getResources().getString(R.string.intentMesAddress), getResources().getString(R.string.stringPartPhone)+" " + etPhone.getText().toString());
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(intent, R.string.resultConf);
                     }
@@ -360,17 +360,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     private void checkSize(){
-        if(spSize.getSelectedItem().toString().equals("Medium")){
+        if(spSize.getSelectedItem().toString().equals(getResources().getString(R.string.stringMedium))){
             porder[cntPiz].setPizzaPrice(2.00);
-        }
-        else if(spSize.getSelectedItem().toString().equals("Big")){
+        }else if(spSize.getSelectedItem().toString().equals(getResources().getString(R.string.stringBig))){
             porder[cntPiz].setPizzaPrice(5.00);
         }
     }
 
     private boolean checkSauce(){
         if(cbTable.isChecked()){
-            if(spSauce.getSelectedItem().toString().equals("none")){
+            if(spSauce.getSelectedItem().toString().equals(getResources().getString(R.string.stringNone))){
                 Toast.makeText(this, R.string.toastSauceNot, Toast.LENGTH_LONG).show();
                 return false;
             }else{
@@ -388,10 +387,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     private boolean checkPizzaInfo(){
-        if (porder[cntPiz].getPizzaName().equals(R.string.stringNotSelected)){
-            Toast.makeText(this, R.string.toastNoName, Toast.LENGTH_LONG).show();
-            return false;
-        }else if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))){
+       if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))){
             Toast.makeText(this, R.string.toastNoSize, Toast.LENGTH_LONG).show();
             return false;
         }else if(porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
@@ -574,7 +570,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 && minute > helpMin)){
             txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
         }else{
-            Toast.makeText(this,R.string.pickerTimeNot, Toast.LENGTH_LONG).show();
+            Toast.makeText(this,R.string.toastTimeNot, Toast.LENGTH_LONG).show();
         }
 
     }
