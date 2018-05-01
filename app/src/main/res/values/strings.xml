@@ -76,6 +76,11 @@
 
     <string name="errorReading">Reading failed.</string>
 
+    <string name="mediumPizPrice">2.00</string>
+    <string name="largePizPrice">5.00</string>
+    <string name="saucePrice">2.00</string>
+    <string name="grpSaucePrice">6.00</string>
+
     <string-array name="arraySizes">
         <item name ="not">not selected</item>
         <item name="sizeSmall">Small (for kids)</item>
