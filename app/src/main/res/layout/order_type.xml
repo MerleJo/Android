@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,7 +10,6 @@
         android:id="@+id/txtTakeOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="@string/txtTakeOrder"
         android:textAlignment="center"
         android:textSize="24sp" />
@@ -17,37 +17,41 @@
     <RadioGroup
         android:id="@+id/rdGroup"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="8">
+        android:layout_height="wrap_content">
 
         <RadioButton
             android:id="@+id/rdbtPizzeria"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/big"
             android:text="@string/rdbtPizzeria" />
 
         <RadioButton
             android:id="@+id/rdbtTakeaway"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/big"
             android:text="@string/rdbtTakeaway" />
 
         <RadioButton
             android:id="@+id/rdbtDelivery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/big"
             android:text="@string/rdbtDelivery" />
 
     </RadioGroup>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="378dp"
+        android:layout_height="317dp"
+        android:src="@drawable/pizza_big" />
 
     <Button
         android:id="@+id/btnOrderTypeOK"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
         android:text="@string/btnOK" />
 
 </LinearLayout>

@@ -588,8 +588,16 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     private void setPickupTime() {                                                                  // is used to initiate the timepicker
+        int minute     =  calendar.get(Calendar.MINUTE) + 30;
         int hour    = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute  = calendar.get(Calendar.MINUTE);
+
+        if(minute >= 60){
+            minute -= 60;
+            hour ++;
+            if(hour >= 24){
+                hour-=24;
+            }
+        }
         TimePickerDialog picker;
 
         picker = new TimePickerDialog(this, this, hour, minute, true);

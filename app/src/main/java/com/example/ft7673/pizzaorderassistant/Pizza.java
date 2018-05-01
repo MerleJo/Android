@@ -12,7 +12,8 @@ public class Pizza implements Serializable{
     private boolean     tableSauce;
     private double      price;
 
-    public Pizza(String name){
+
+    public Pizza(String name){                                                                      //The pizza object will be created with just the name and the other values will be set to a default values
         this.name       = name;
         this.dough      = "not selected";
         this.size       = "not selected";
@@ -20,17 +21,18 @@ public class Pizza implements Serializable{
         tableSauce      = false;
     }
 
-    public String getPizzaName(){
+
+    public String getPizzaName(){                                                                   // getters and setters for the pizza class
         return this.name;
     }
-    public String getPizzaDough(){
+    public String   getPizzaDough(){
         return this.dough;
     }
-    public String getPizzaSize(){return this.size;}
+    public String   getPizzaSize(){return this.size;}
     public String[] getPizzaToppings(){return this.toppings;}
-    public String getPizzaSauce(){return this.sauce;}
-    public double getPizzaPrice(){return this.price;}
-    public boolean getTableSauce(){return this.tableSauce;}
+    public String   getPizzaSauce(){return this.sauce;}
+    public double   getPizzaPrice(){return this.price;}
+    public boolean  getTableSauce(){return this.tableSauce;}
 
     public void setPizzaDough(String dough){this.dough = dough;}
     public void setPizzaSize(String size){

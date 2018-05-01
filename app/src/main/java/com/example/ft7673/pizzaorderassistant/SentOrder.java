@@ -18,16 +18,17 @@ import java.util.ArrayList;
 public class SentOrder extends Activity implements View.OnClickListener,
         AdapterView.OnItemLongClickListener, DialogInterface.OnClickListener {
 
-    Button btnSendOK;
-    TextView txtMoney;
-    TextView txtOrderType;
-    TextView firstInfo;
-    TextView secondInfo;
-    TextView txtTableSauce;
-    ListView list;
-    String   tableSauceString;
-    String[] helpTitle = new String[100];
-    String[] helpInfo = new String[100];
+    private Button   btnSendOK;
+    private TextView txtMoney;                                                                      // Textviews for the final layout where everything is displayed
+    private TextView txtOrderType;
+    private TextView firstInfo;
+    private TextView secondInfo;
+    private TextView txtTableSauce;
+    private ListView list;                                                                          // Every pizza object is displayed here
+    private String   tableSauceString;
+    private String[] helpTitle;                                                                     // This saves the names of the pizzas
+    private String[] helpInfo;                                                                      // saves the additional toppings
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +45,20 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
         btnSendOK.setOnClickListener(this);
 
+        helpTitle = new String[25];
+        helpInfo  = new String[25];
+
         receiveOrder();
     }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSendOK:
+            case R.id.btnSendOK:                                                                    // If this is pressed you close the Intent and open the other one to type in more orders. This ends the cycle
                 Intent intent = new Intent(this, PizzaOrder.class);
-                intent.putExtra(getResources().getString(R.string.mesConfirmation), R.string.mesConfirmation);
+                intent.putExtra(getResources().getString(R.string.mesConfirmation)
+                        , R.string.mesConfirmation);
                 setResult(R.string.resultConf, intent);
                 finish();
                 break;
@@ -63,7 +69,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {       // Long click on the Itemlist to see the details of the order
         showOrderDetails(position);
         return true;
     }
@@ -78,7 +84,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
     }
 
 
-    private void receiveOrder() {
+    private void receiveOrder() {                                                                   // MERLE TU ETWAS
         Intent intent                       = getIntent();
         MyOrder order                       = (MyOrder) intent.getSerializableExtra(getResources().getString(R.string.intentMesOrder));
         tableSauceString                    = order.findTableSauce();
@@ -90,7 +96,8 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 txtOrderType.setText(getResources().getString(R.string.stringPartOption) +" " +
                         getResources().getString(R.string.rdbtPizzeria).toString());
                 firstInfo.setText(getResources().getString(R.string.stringPartTable) +
-                        String.valueOf(intent.getExtras().getInt(getResources().getString(R.string.intentMesTable))));
+                        String.valueOf(intent.getExtras().getInt(getResources()
+                                .getString(R.string.intentMesTable))));
                 break;
             case 2:
                 txtOrderType.setText(getResources().getString(R.string.stringPartOption)+ " " +
@@ -105,10 +112,12 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 secondInfo.setText(intent.getExtras().getString(getResources().getString(R.string.intentMesPhone)));
                 break;
         }
-        txtMoney.setText(Double.toString(order.getTotal()) + " €");
+        txtMoney.setText(Double.toString(order.getTotal()) + getResources()
+                .getString(R.string.currency));
         if(!(tableSauceString.equals(getResources().getString(R.string.stringNone)))){
-            txtTableSauce.setText(getResources().getString(R.string.stringPartSauce)+" " +
-                    tableSauceString + "(" +order.getTableSaucePrice() + " € )");
+            txtTableSauce.setText(getResources().getString(R.string.stringPartSauce)+" "
+                    + tableSauceString + "(" +order.getTableSaucePrice()
+                    + getResources().getString(R.string.currency) +" )");
         }
 
         helpTitle   = order.writeOrder();
@@ -123,7 +132,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
     }
 
 
-    private AlertDialog showOrderDetails(int pos) {
+    private AlertDialog showOrderDetails(int pos) {                                                 // shows the details of the pizza.
         AlertDialog.Builder diabuilder = new AlertDialog.Builder(this);
         diabuilder  .setTitle(R.string.alertOrderTitle)
                     .setMessage(helpInfo[pos])

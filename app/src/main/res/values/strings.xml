@@ -19,7 +19,7 @@
     <string name="hintAddress">Delivery Address</string>
     <string name="hintPhone">Phone Number</string>
     <string name="hintNotSelected">Not selected yet</string>
-    <string name="hintClickTime">Click here to set the time. </string>
+    <string name="hintClickTime">Long click to set the time. </string>
 
     <string name="cbTable">Sauce for the table</string>
 
@@ -80,6 +80,8 @@
     <string name="largePizPrice">5.00</string>
     <string name="saucePrice">2.00</string>
     <string name="grpSaucePrice">6.00</string>
+
+    <string name="currency"> € </string>
 
     <string-array name="arraySizes">
         <item name ="not">not selected</item>
