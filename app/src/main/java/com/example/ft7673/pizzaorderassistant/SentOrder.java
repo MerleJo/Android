@@ -85,11 +85,12 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
 
     private void receiveOrder() {                                                                   // MERLE TU ETWAS
-        Intent intent                       = getIntent();
-        MyOrder order                       = (MyOrder) intent.getSerializableExtra(getResources().getString(R.string.intentMesOrder));
-        tableSauceString                    = order.findTableSauce();
+        Intent                  intent      = getIntent();
+        MyOrder                 order       = (MyOrder) intent.getSerializableExtra(getResources().getString(R.string.intentMesOrder));
+        String                  help;
         final ArrayList<String> listing     = new ArrayList<String>();
-        ArrayAdapter<String> adap           = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listing);
+        ArrayAdapter<String>    adap        = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listing);
+        tableSauceString                    = order.findTableSauce();
 
         switch (intent.getExtras().getInt(getResources().getString(R.string.intentMesOrderType))) {
             case 1:
@@ -112,12 +113,13 @@ public class SentOrder extends Activity implements View.OnClickListener,
                 secondInfo.setText(intent.getExtras().getString(getResources().getString(R.string.intentMesPhone)));
                 break;
         }
-        txtMoney.setText(Double.toString(order.getTotal()) + getResources()
+        help = String.format("%.2f", order.getTotal());
+        txtMoney.setText(help + getResources()
                 .getString(R.string.currency));
         if(!(tableSauceString.equals(getResources().getString(R.string.stringNone)))){
+            help = String.format("%.2f", order.getTableSaucePrice());
             txtTableSauce.setText(getResources().getString(R.string.stringPartSauce)+" "
-                    + tableSauceString + "(" +order.getTableSaucePrice()
-                    + getResources().getString(R.string.currency) +" )");
+                    + tableSauceString + "(" + help+ getResources().getString(R.string.currency) +" )");
         }
 
         helpTitle   = order.writeOrder();

@@ -64,6 +64,7 @@ public class MyOrder implements Serializable{
     public String[] getMoreOrder(){                                                                 // writes the extra information into the alertDialog
         String[]    toSave     = new String[order.length];
         String      saveTop;
+        String      help;
 
         for(int i = 0; i < order.length; i++){
             saveTop = "";
@@ -77,10 +78,11 @@ public class MyOrder implements Serializable{
                         saveTop = saveTop + order[i].getPizzaToppings()[j];
                     }
                 }
+                help = String.format("%.2f", order[i].getPizzaPrice());
                 toSave[i] = "Dough: " + order[i].getPizzaDough() + "\n" +
                             "Toppings: " + saveTop + "\n" +
                             "Sauce: " + order[i].getPizzaSauce() + "\n" +
-                            "Price: " + order[i].getPizzaPrice() + " €";
+                            "Price: " + help + " €";
             }
         }
         return toSave;
