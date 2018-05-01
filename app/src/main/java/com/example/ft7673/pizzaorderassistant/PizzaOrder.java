@@ -480,11 +480,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     }
                     if (help) {
                         topSw.setChecked(true);
-                        checkedChange = false;
 
                     } else {
                         topSw.setChecked(false);
                     }
+                    checkedChange = false;
                     break;
                 case DialogInterface.BUTTON_NEGATIVE:
                     resetTop();
