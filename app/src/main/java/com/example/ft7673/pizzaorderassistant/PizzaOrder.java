@@ -681,7 +681,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {                 // FEHLT ERKLÄREN
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {                 // is called when 2. Activity OK button is pressed to return to this Activity and reset app for a new order
         if(resultCode == R.string.resultConf){
             onCreate(null);
             Toast.makeText(this, R.string.resultConf, Toast.LENGTH_LONG).show();
