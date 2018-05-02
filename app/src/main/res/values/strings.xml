@@ -85,7 +85,7 @@
 
     <string-array name="arraySizes">
         <item name ="not">not selected</item>
-        <item name="sizeSmall">Small (for kids)</item>
+        <item name="sizeSmall">Small -for kids-</item>
         <item name="sizeMedium">Medium</item>
          <item name="sizeBig">Big</item>
     </string-array>

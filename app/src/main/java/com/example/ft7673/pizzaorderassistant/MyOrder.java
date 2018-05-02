@@ -5,9 +5,10 @@ import java.io.Serializable;
 public class MyOrder implements Serializable{
 
     private double  total;
+    private double  tableSaucePrice;
     private Pizza[] order;
     private String  tableSauceList;
-    private double  tableSaucePrice;
+
 
     public MyOrder(Pizza[] order, double tableSaucePrice){                                          // The order object is created out of the Pizzaarrays. This will be called if the meal is eaten in the pizzeria
         this.order              = order;

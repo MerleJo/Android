@@ -38,7 +38,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private View                        orderView;                                                  // used to force the user to write first the pizza while making the rest invisible
 
-    private RadioGroup                  rdGroup;                                                    // Is used in the layout order type to select the order type
+    private RadioGroup                  rdGroup;                                                    // used in the layout order type to select the order type
     private RadioButton                 rdbtPizzeria;
 
     private Button                      btnOrderOK;                                                 // Various buttons in the layouts to navigate through them
@@ -47,18 +47,18 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private Button                      btnAdd;
     private Button                      btnDeliveryOK;
 
-    private AlertDialog                 alertTopping;                                               // Used to diffentiate which buttons where called in the onClick of the alerts
+    private AlertDialog                 alertTopping;                                               // used to differentiate which buttons where called in the onClick of the alerts
     private AlertDialog                 alertTable;
 
-    private EditText                    etAddress;                                                  // These are used to write down customer specific information that are needed later
+    private EditText                    etAddress;                                                  // these are used to write down customer specific information that are needed later
     private EditText                    etPhone;
     private EditText                    tableNr;
 
     private CheckBox                    cbTable;                                                    // Checkbox to see if the sauce should be for the whole table
 
-    private TextView                    txtPickedTime;                                              // Displays the chosen time for the takeaway
+    private TextView                    txtPickedTime;                                              // displays the chosen time for the takeaway
 
-    private Spinner                     spPizza;                                                    //Spinners and a switch to set the pizza order
+    private Spinner                     spPizza;                                                    // spinners and a switch to set the pizza order
     private Spinner                     spDough;
     private Spinner                     spSize;
     private Spinner                     spSauce;
@@ -73,9 +73,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private ArrayAdapter<String>        adpr;                                                       // Adapter to get the spinners ready
 
     private int                         orderType;                                                  // 1= Pizzeria, 2=Takeaway, 3=Delivery
-    private int                         cntPiz;                                                     // Show many pizzas there are
+    private int                         cntPiz;                                                     // counts many pizzas are in this order
     private int                         csvFile;                                                    // indicates which csvFile should be read next
-    private int                         selectedTable;                                              // Is the number of the table if you eat in the pizzeria
+    private int                         selectedTable;                                              // is the number of the table if you eat in the pizzeria
 
     private double                      grpSaucPrice;
     private double                      priceHelperPz;                                              // used to help write down the prices
@@ -93,11 +93,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private Calendar                    calendar = Calendar.getInstance();                          // used for the time picker
 
-    private Pizza[]                     porder;                                                     // saves all of our pizzaobject
+    private Pizza[]                     porder;                                                     // saves all of our pizzaobjects
 
     private Intent                      intent;
 
-    private MyOrder                     myOrder;                                                    // Is used for calculating the price with all of the pizzas
+    private MyOrder                     myOrder;                                                    // is used for calculating the price with all of the pizzas
 
 
     @Override
@@ -136,7 +136,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             case R.id.mnuExit:
                 finish();                                                                           // ends the app and closes it
                 break;
-            case R.id.mnuCancel:                                                                    // Cancels the order, resets the app and sets it to the beginning.
+            case R.id.mnuCancel:                                                                    // cancels the order, resets the app and sets it to the beginning
                 Toast.makeText(this, R.string.toastOrderCancel, Toast.LENGTH_SHORT).show();
                 onCreate(new Bundle());
                 break;
@@ -166,7 +166,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
 
-    public void defineOrder() {                                                                     // is used to initiate the second layout were the pizza toppings etc is chosen
+    public void defineOrder() {                                                                     // is used to initiate the second layout where the pizza toppings etc is chosen
         setContentView(R.layout.activity_main);
 
         orderView   = findViewById(R.id.orderView);                                                 // defines all of the variables and connects them to the layout
@@ -194,7 +194,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
             getCsvSize();
             readFile();
         }
-        selected    = new boolean[toppingList.length];                                              // sets the sice of the boolean list of the settings to the optimal size
+        selected    = new boolean[toppingList.length];                                              // sets the size of the boolean list of the settings to the optimal size
 
         adpr = new ArrayAdapter<String>(this,                                               // adapters are initialized and used to set the spinners.
                 android.R.layout.simple_spinner_item, pizzaList);
@@ -222,7 +222,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         spDough.setAdapter(adpr);
         spDough.setOnItemSelectedListener(this);
 
-        topSw.setOnCheckedChangeListener(this);                                                     // The listener for the switch is set
+        topSw.setOnCheckedChangeListener(this);                                                     // the listener for the switch is set
     }
 
 
@@ -267,7 +267,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
 
-    private void readFile() {                                                                       // Reads what is written in every csv File
+    private void readFile() {                                                                       // reads what is written in every csv File
         int counter = 0;
         try {
             switch (csvFile) {
@@ -325,17 +325,18 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                     defineOrder();
                 }
                 else {
-                    Toast.makeText(this, R.string.toastSelectType,                          // if there is nothing selected you can't progress
+                    Toast.makeText(this, R.string.toastSelectType,              // if there is nothing selected you can't progress
                             Toast.LENGTH_LONG).show();
                 }
                 break;
 
-            case R.id.btnAdd:                                                                       // The add button on the main layout to add the pizza to the order and make a new one
+            case R.id.btnAdd:                                                                       // the add button on the main layout to add the pizza to the order and make a new one
                 if(cntPiz == porder.length-1){                                                      // if there are too many pizzas you are informed to make a new order and checkout
-                    Toast.makeText(this, R.string.toastTooMany, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.toastTooMany,
+                            Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (checkPizzaInfo() && checkSauce()){                                              // if the fields of Pizza, dough, size and sauce (if group sauce) are filledout correctly
+                if (checkPizzaInfo() && checkSauce()){                                              // if the fields of Pizza, dough, size and sauce (if group sauce) are filled out correctly
                     porder[cntPiz].setPizzaPrice(priceHelperPz);                                    // the price will be calculated and put to the pizza
                     if(cbTable.isChecked()){                                                        // is used to show in a later layout that there is a group pizza
                         porder[cntPiz].setTableSauce(true);
@@ -385,7 +386,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                             spPckOpt.setOnItemSelectedListener(this);
                             break;
                         case 3:                                                                     // Delivery
-                            setContentView(R.layout.delivery_info);                                 // for the delivery a layout is called where you type the adress an a phone number in
+                            setContentView(R.layout.delivery_info);                                 // for the delivery a layout is called where you type the address an a phone number in
                             etAddress = findViewById(R.id.etAddress);
                             etPhone = findViewById(R.id.eTPhone);
                             btnDeliveryOK = findViewById(R.id.btnDeliveryOK);
@@ -426,8 +427,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 }
                 break;
 
-            case R.id.btnDeliveryOK:                                                                // The button for the deliverylayout
-                if(etAddress.getText().toString().equals("")){                                      // checks if the fields are empty and if not procedess
+            case R.id.btnDeliveryOK:                                                                // button for the deliverylayout
+                if(etAddress.getText().toString().equals("")){                                      // checks if the fields are empty and if not: it proceeds
                     Toast.makeText(this, R.string.toastSelectAdress
                             , Toast.LENGTH_SHORT).show();
                     break;
@@ -497,7 +498,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     @Override
-    public boolean onLongClick(View v) {                                                            // Long click for the time picker
+    public boolean onLongClick(View v) {                                                            // long click for the time picker
         switch (v.getId()){
             case R.id.txtPickedTime:
                 setPickupTime();
@@ -507,7 +508,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
 
-    private void checkSize(){                                                                       // checks if the pizza is medium or big and sets then an extra price
+    private void checkSize(){                                                                       // checks if the pizza is medium or big and adds then an extra price
         if(spSize.getSelectedItem().toString().equals(getResources().getString(R.string.stringMedium))){
             porder[cntPiz].setPizzaPrice(Double.parseDouble(getResources().
                     getString(R.string.mediumPizPrice)));
@@ -554,7 +555,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
 
-    private String[] fillTops() {                                                                   // counts the required toppings and puts the price in the pizza object
+    private String[] fillTops() {                                                                   // counts the required toppings and adds the price to the pizza object
         int counter     = 0;
         double topPrice = 0.00;
         for (int i = 0; i < toppingList.length; i++) {
@@ -580,14 +581,14 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
 
-    private void resetTop(){                                                                         // resets the topping list if the cancel button is pressed
+    private void resetTop(){                                                                        // resets the topping list if the cancel button is pressed
         for (int i = 0; i < toppingList.length ; i++){
             selected[i] = false;
         }
     }
 
 
-    private void setPickupTime() {                                                                  // is used to initiate the timepicker
+    private void setPickupTime() {                                                                  // is used to initiate the time picker
         int minute     =  calendar.get(Calendar.MINUTE) + 30;
         int hour    = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -697,11 +698,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {                                     // Spinner if nothing is selected
+    public void onNothingSelected(AdapterView<?> adapterView) {                                     // spinner if nothing is selected
     }
 
     @Override
-    public void onClick(DialogInterface dialogInterface, int i, boolean b) {                        // Is called when toppings are selected.
+    public void onClick(DialogInterface dialogInterface, int i, boolean b) {                        // is called when toppings are selected.
     }
 
     @Override

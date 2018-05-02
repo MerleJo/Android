@@ -19,14 +19,14 @@ public class SentOrder extends Activity implements View.OnClickListener,
         AdapterView.OnItemLongClickListener, DialogInterface.OnClickListener {
 
     private Button   btnSendOK;
-    private TextView txtMoney;                                                                      // Textviews for the final layout where everything is displayed
+    private TextView txtMoney;                                                                      // textviews for the final layout where everything is displayed
     private TextView txtOrderType;
     private TextView firstInfo;
     private TextView secondInfo;
     private TextView txtTableSauce;
-    private ListView list;                                                                          // Every pizza object is displayed here
+    private ListView list;                                                                          // every pizza object is displayed here
     private String   tableSauceString;
-    private String[] helpTitle;                                                                     // This saves the names of the pizzas
+    private String[] helpTitle;                                                                     // saves the names of the pizzas
     private String[] helpInfo;                                                                      // saves the additional toppings
 
 
@@ -55,7 +55,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnSendOK:                                                                    // If this is pressed you close the Intent and open the other one to type in more orders. This ends the cycle
+            case R.id.btnSendOK:                                                                    // if pressed, Activity closes, old one opens and is reset to begin with new order. This ends the cycle
                 Intent intent = new Intent(this, PizzaOrder.class);
                 intent.putExtra(getResources().getString(R.string.mesConfirmation)
                         , R.string.mesConfirmation);
@@ -69,7 +69,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
 
 
     @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {       // Long click on the Itemlist to see the details of the order
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {       // long click on the item in the list to see the details of the pizza
         showOrderDetails(position);
         return true;
     }
@@ -84,7 +84,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
     }
 
 
-    private void receiveOrder() {                                                                   // MERLE TU ETWAS
+    private void receiveOrder() {                                                                   // receives information of the order and displays them in this new Activity
         Intent                  intent      = getIntent();
         MyOrder                 order       = (MyOrder) intent.getSerializableExtra(getResources().getString(R.string.intentMesOrder));
         String                  help;
@@ -92,7 +92,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
         ArrayAdapter<String>    adap        = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listing);
         tableSauceString                    = order.findTableSauce();
 
-        switch (intent.getExtras().getInt(getResources().getString(R.string.intentMesOrderType))) {
+        switch (intent.getExtras().getInt(getResources().getString(R.string.intentMesOrderType))) {                                           // depending on the order type the received information are displayed
             case 1:
                 txtOrderType.setText(getResources().getString(R.string.stringPartOption) +" " +
                         getResources().getString(R.string.rdbtPizzeria).toString());
@@ -116,6 +116,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
         help = String.format("%.2f", order.getTotal());
         txtMoney.setText(help + getResources()
                 .getString(R.string.currency));
+
         if(!(tableSauceString.equals(getResources().getString(R.string.stringNone)))){
             help = String.format("%.2f", order.getTableSaucePrice());
             txtTableSauce.setText(getResources().getString(R.string.stringPartSauce)+" "
