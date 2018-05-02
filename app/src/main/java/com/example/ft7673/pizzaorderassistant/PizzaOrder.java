@@ -91,7 +91,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private boolean                     checkedChange;                                              // help variable to handle the on/off function of the switch
     private boolean[]                   selected;                                                   // is needed for the toppings, saves which toppings are selected
 
-    private Calendar                    calendar = Calendar.getInstance();                          // used for the time picker
+    private Calendar                    calendar                            ;                       // used for the time picker
 
     private Pizza[]                     porder;                                                     // saves all of our pizzaobjects
 
@@ -589,7 +589,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     private void setPickupTime() {                                                                  // is used to initiate the time picker
-        int minute     =  calendar.get(Calendar.MINUTE) + 30;
+        calendar    = Calendar.getInstance();                                                       // needs to be initialized here to get current time for calculation
+        int minute  =  calendar.get(Calendar.MINUTE) + 30;
         int hour    = calendar.get(Calendar.HOUR_OF_DAY);
 
         if(minute >= 60){
@@ -610,8 +611,9 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {                       // is used to control that the time is at least half an hour in the future
-        int helpMin     =  calendar.get(Calendar.MINUTE) + 30;
-        int helpHour    = calendar.get(Calendar.HOUR_OF_DAY);
+        calendar            = Calendar.getInstance();                                               // needs to be initialized here to get current time for calculation
+        int helpMin         =  calendar.get(Calendar.MINUTE) + 30;
+        int helpHour        = calendar.get(Calendar.HOUR_OF_DAY);
 
         if(helpMin >= 60){
             helpMin -= 60;
