@@ -33,13 +33,15 @@
     <string name="toastSelectType">Please select an order type first.</string>
     <string name="toastSelectTime">Please select a time</string>
     <string name="toastSelectPckOpt">Please select a packing option</string>
+    <string name="toastSelectTiPck">Please select a time and packing option first.</string>
     <string name="toastSelectAdress">Please select an address</string>
     <string name="toastSelectPhNr">Please select a phone number</string>
+    <string name="toastSelectAdNr">Please select an address and phone number first.</string>
     <string name="toastOrderCancel">Order cancelled</string>
     <string name="toastSelectTable">Please select a table</string>
     <string name="toastNoDough">Please select a dough first.</string>
     <string name="toastNoSize">Please select a size first.</string>
-    <string name="toastMissingAll">Please select a size and dough first.</string>
+    <string name="toastMissingAllMain">Please select a size and dough first.</string>
     <string name="toastSauceNot">Please select a sauce for the table first.</string>
     <string name="toastTooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
     <string name="toastTimeNot">Please pick a later time.\nThis pick up time is not available.</string>

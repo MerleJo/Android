@@ -399,7 +399,12 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
 
             case R.id.btnPickupOK:                                                                  // used on the takeaway layout. Checks if the fields are correct
-                if(txtPickedTime.getText().toString().equals(getResources()
+                if(txtPickedTime.getText().toString().equals(R.string.hintClickTime) &&
+                        spPckOpt.getSelectedItem().toString().equals(getResources().getString(R.string.stringNotSelected))){
+                    Toast.makeText(this, R.string.toastSelectTiPck, Toast.LENGTH_LONG).show();
+                    break;
+                }
+                else if(txtPickedTime.getText().toString().equals(getResources()
                         .getString(R.string.hintClickTime))){
                     Toast.makeText(this, R.string.toastSelectTime
                             , Toast.LENGTH_SHORT).show();
@@ -409,6 +414,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                         .getString(R.string.stringNotSelected))){
                     Toast.makeText(this, R.string.toastSelectPckOpt
                             , Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 else {
                     MyOrder myOrder = new MyOrder(porder);                                          // after everything is checked the order will be given to a new activity
@@ -428,13 +434,19 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
 
             case R.id.btnDeliveryOK:                                                                // button for the deliverylayout
-                if(etAddress.getText().toString().equals("")){                                      // checks if the fields are empty and if not: it proceeds
+                if(etAddress.getText().toString().equals("") &&                                     // checks if the fields are empty and if not: it proceeds
+                        etPhone.getText().toString().equals("")){
+                    Toast.makeText(this, R.string.toastSelectAdNr, Toast.LENGTH_LONG).show();
+                    break;
+                }
+                else if(etAddress.getText().toString().equals("")){
                     Toast.makeText(this, R.string.toastSelectAdress
                             , Toast.LENGTH_SHORT).show();
                     break;
                 }
                 else if(etPhone.getText().toString().equals("")){
                     Toast.makeText(this, R.string.toastSelectPhNr, Toast.LENGTH_SHORT).show();
+                    break;
                 }
                 else {
                     myOrder = new MyOrder(porder);                                                  // after everything is checked the order will be given to a new activity
@@ -542,7 +554,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     private boolean checkPizzaInfo(){                                                               // checks if dough size and pizza is selected
        if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))
                &&porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
-           Toast.makeText(this, R.string.toastMissingAll, Toast.LENGTH_LONG).show();
+           Toast.makeText(this, R.string.toastMissingAllMain, Toast.LENGTH_LONG).show();
            return false;
        }else if(porder[cntPiz].getPizzaSize().equals(getResources()
                .getString(R.string.stringNotSelected))){
