@@ -399,9 +399,12 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
 
             case R.id.btnPickupOK:                                                                  // used on the takeaway layout. Checks if the fields are correct
-                if(txtPickedTime.getText().toString().equals(R.string.hintClickTime) &&
-                        spPckOpt.getSelectedItem().toString().equals(getResources().getString(R.string.stringNotSelected))){
-                    Toast.makeText(this, R.string.toastSelectTiPck, Toast.LENGTH_LONG).show();
+                if(txtPickedTime.getText().toString().equals(getResources().
+                        getString(R.string.hintClickTime)) &&
+                        spPckOpt.getSelectedItem().toString().equals(getResources()
+                                .getString(R.string.stringNotSelected))){
+                    Toast.makeText(this, R.string.toastSelectTiPck,
+                            Toast.LENGTH_LONG).show();
                     break;
                 }
                 else if(txtPickedTime.getText().toString().equals(getResources()
@@ -682,10 +685,31 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {              // handles the spinners
+        String      hlpDough = null;                                                                // this is used to handle if the pizza is changed while other options are selected.
+        String      hlpSize = null;                                                                 // Sets the options like they were before.
+        String      hlpSauce = null;
+        String[]    hlpToppings = null;
+        boolean     overwritten = false;
         if (adapterView == spPizza) {
+            if(porder[cntPiz] != null) {
+                hlpDough = porder[cntPiz].getPizzaDough();
+                hlpSize = porder[cntPiz].getPizzaSize();
+                hlpSauce = porder[cntPiz].getPizzaSauce();
+                hlpToppings = porder[cntPiz].getPizzaToppings();
+                overwritten = true;
+            }
+
             Pizza help = new Pizza(pizzaList[i]);
             porder[cntPiz] = help;
             priceHelperPz = pizzaPrice[i];
+
+            if ( overwritten == true) {
+                porder[cntPiz].setPizzaDough(hlpDough);
+                porder[cntPiz].setPizzaSauce(hlpSauce);
+                porder[cntPiz].setPizzaSize(hlpSize);
+                porder[cntPiz].setPizzaToppings(hlpToppings);
+                overwritten = false;
+            }
 
             if(spPizza.getSelectedItem().toString().equals(getResources()
                     .getString(R.string.stringNotSelected))){

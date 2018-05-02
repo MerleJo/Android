@@ -97,7 +97,7 @@ public class SentOrder extends Activity implements View.OnClickListener,
             case 1:
                 txtOrderType.setText(getResources().getString(R.string.stringPartOption) +" " +
                         getResources().getString(R.string.rdbtPizzeria).toString());
-                firstInfo.setText(getResources().getString(R.string.stringPartTable) +
+                firstInfo.setText(getResources().getString(R.string.stringPartTable) + " " +
                         String.valueOf(intent.getExtras().getInt(getResources()
                                 .getString(R.string.intentMesTable))));
                 break;
