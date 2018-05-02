@@ -89,7 +89,8 @@ public class SentOrder extends Activity implements View.OnClickListener,
         MyOrder                 order       = (MyOrder) intent.getSerializableExtra(getResources().getString(R.string.intentMesOrder));
         String                  help;
         final ArrayList<String> listing     = new ArrayList<String>();
-        ArrayAdapter<String>    adap        = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listing);
+        ArrayAdapter<String>    adap        = new ArrayAdapter<String>(this,
+                                                android.R.layout.simple_list_item_1, listing);
         tableSauceString                    = order.findTableSauce();
 
         switch (intent.getExtras().getInt(getResources().getString(R.string.intentMesOrderType))) {                                           // depending on the order type the received information are displayed
