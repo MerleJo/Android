@@ -540,7 +540,11 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
 
     private boolean checkPizzaInfo(){                                                               // checks if dough size and pizza is selected
-       if(porder[cntPiz].getPizzaSize().equals(getResources()
+       if(porder[cntPiz].getPizzaSize().equals(getResources().getString(R.string.stringNotSelected))
+               &&porder[cntPiz].getPizzaDough().equals(getResources().getString(R.string.stringNotSelected))){
+           Toast.makeText(this, R.string.toastMissingAll, Toast.LENGTH_LONG).show();
+           return false;
+       }else if(porder[cntPiz].getPizzaSize().equals(getResources()
                .getString(R.string.stringNotSelected))){
             Toast.makeText(this, R.string.toastNoSize, Toast.LENGTH_LONG).show();
             return false;
