@@ -590,7 +590,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private void setPickupTime() {                                                                  // is used to initiate the time picker
         calendar    = Calendar.getInstance();                                                       // needs to be initialized here to get current time for calculation
-        int minute  =  calendar.get(Calendar.MINUTE) + 30;
+        int minute  = calendar.get(Calendar.MINUTE) + 30;
         int hour    = calendar.get(Calendar.HOUR_OF_DAY);
 
         if(minute >= 60){
@@ -612,7 +612,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     @Override
     public void onTimeSet(TimePicker timePicker, int hourofDay, int minute) {                       // is used to control that the time is at least half an hour in the future
         calendar            = Calendar.getInstance();                                               // needs to be initialized here to get current time for calculation
-        int helpMin         =  calendar.get(Calendar.MINUTE) + 30;
+        int helpMin         = calendar.get(Calendar.MINUTE) + 30;
         int helpHour        = calendar.get(Calendar.HOUR_OF_DAY);
 
         if(helpMin >= 60){
@@ -624,7 +624,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
         }
         if(  hourofDay > helpHour
                 || (hourofDay == helpHour
-                && minute > helpMin)){
+                && minute >= helpMin)){
             txtPickedTime.setText(String.format("%02d:%02d", hourofDay, minute));
         }else{
             Toast.makeText(this,R.string.toastTimeNot, Toast.LENGTH_LONG).show();
