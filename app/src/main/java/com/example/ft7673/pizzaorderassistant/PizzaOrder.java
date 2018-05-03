@@ -99,7 +99,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private MyOrder                     myOrder;                                                    // is used for calculating the price with all of the pizzas
 
-    MenuItem item;
+    private MenuItem                    mnuCancel;                                                  // menu button to cancel an order
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +127,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        item  = menu.findItem(R.id.mnuCancel);
-        item.setVisible(false);
+        mnuCancel  = menu.findItem(R.id.mnuCancel);
+        mnuCancel.setVisible(false);                                                                // cancel option is not visible before starting an order
         return true;
     }
 
@@ -141,6 +141,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
                 break;
             case R.id.mnuCancel:                                                                    // cancels the order, resets the app and sets it to the beginning
                 Toast.makeText(this, R.string.toastOrderCancel, Toast.LENGTH_SHORT).show();
+                mnuCancel.setVisible(false);
                 onCreate(new Bundle());
                 break;
             default:
@@ -172,7 +173,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     public void defineOrder() {                                                                     // is used to initiate the second layout where the pizza toppings etc is chosen
         setContentView(R.layout.activity_main);
 
-        item.setVisible(true);
+        mnuCancel.setVisible(true);
         orderView   = findViewById(R.id.orderView);                                                 // defines all of the variables and connects them to the layout
         spPizza     = findViewById(R.id.spPizza);
         spDough     = findViewById(R.id.spDough);
@@ -739,6 +740,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {                 // is called when 2. Activity OK button is pressed to return to this Activity and reset app for a new order
         if(resultCode == R.string.resultConf){
             onCreate(null);
+            mnuCancel.setVisible(false);
             Toast.makeText(this, R.string.resultConf, Toast.LENGTH_LONG).show();
         }
     }
