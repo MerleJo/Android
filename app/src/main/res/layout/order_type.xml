@@ -44,8 +44,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="378dp"
-        android:layout_height="317dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:src="@drawable/pizza_big" />
 
     <Button
