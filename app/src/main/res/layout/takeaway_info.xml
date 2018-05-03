@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/small"
-        android:layout_weight="50"
+        android:layout_weight="30"
         android:src="@drawable/pizza_carton" />
 
     <Button
