@@ -99,6 +99,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
 
     private MyOrder                     myOrder;                                                    // is used for calculating the price with all of the pizzas
 
+    MenuItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,6 +127,8 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        item  = menu.findItem(R.id.mnuCancel);
+        item.setVisible(false);
         return true;
     }
 
@@ -169,6 +172,7 @@ public class PizzaOrder extends Activity implements RadioGroup.OnCheckedChangeLi
     public void defineOrder() {                                                                     // is used to initiate the second layout where the pizza toppings etc is chosen
         setContentView(R.layout.activity_main);
 
+        item.setVisible(true);
         orderView   = findViewById(R.id.orderView);                                                 // defines all of the variables and connects them to the layout
         spPizza     = findViewById(R.id.spPizza);
         spDough     = findViewById(R.id.spDough);

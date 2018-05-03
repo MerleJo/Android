@@ -19,7 +19,7 @@
     <string name="hintAddress">Delivery Address</string>
     <string name="hintPhone">Phone Number</string>
     <string name="hintNotSelected">Not selected yet</string>
-    <string name="hintClickTime">Long click to set the time. </string>
+    <string name="hintClickTime">Long click here to set the time. </string>
 
     <string name="cbTable">Sauce for the table</string>
 
@@ -44,7 +44,7 @@
     <string name="toastMissingAllMain">Please select a size and dough first.</string>
     <string name="toastSauceNot">Please select a sauce for the table first.</string>
     <string name="toastTooMany">The limit of pizzas per order is reached, please checkout begin a new one</string>
-    <string name="toastTimeNot">Please pick a later time.\nThis pick up time is not available.</string>
+    <string name="toastTimeNot">Please pick a later time.\nThe time has to be at least 30min in the future.</string>
 
     <string name="alertSizeTitle">Select Size</string>
     <string name="alertTopTitle">Select extra toppings</string>
